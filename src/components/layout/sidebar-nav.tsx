@@ -7,7 +7,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, Search, FileText } from "lucide-react";
+import { LayoutDashboard, Users, FileText, Settings } from "lucide-react";
 
 const menuItems = [
   {
@@ -16,14 +16,19 @@ const menuItems = [
     label: "Dashboard",
   },
   {
-    href: "/search",
-    icon: Search,
-    label: "Diagnosis Search",
+    href: "/patients",
+    icon: Users,
+    label: "Patients",
   },
   {
     href: "/reporting",
     icon: FileText,
     label: "Reporting",
+  },
+    {
+    href: "/search",
+    icon: Search,
+    label: "Diagnosis Search",
   },
 ];
 
@@ -36,7 +41,7 @@ export function SidebarNav() {
         <SidebarMenuItem key={item.href}>
           <SidebarMenuButton
             asChild
-            isActive={pathname === item.href}
+            isActive={pathname.startsWith(item.href)}
             tooltip={item.label}
           >
             <Link href={item.href}>

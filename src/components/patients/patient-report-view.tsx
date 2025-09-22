@@ -1,0 +1,176 @@
+"use client";
+
+import { useState, useTransition } from "react";
+import type { PatientFile } from "@/lib/patient-data";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import { ArrowRightLeft, Loader2 } from "lucide-react";
+import { intelligentDiagnosisSearch } from "@/ai/flows/intelligent-diagnosis-search";
+import { useToast } from "@/hooks/use-toast";
+
+type ConvertedDiagnosis = {
+  namasteCode: string;
+  icd11Code: string;
+  description: string;
+};
+
+export default function PatientReportView({ report }: { report: PatientFile }) {
+  const [isPending, startTransition] = useTransition();
+  const [convertedData, setConvertedData] = useState<
+    ConvertedDiagnosis[] | null
+  >(null);
+  const { toast } = useToast();
+
+  const handleConversion = () => {
+    setConvertedData(null);
+    startTransition(async () => {
+      try {
+        const promises = report.diagnoses.map((dx) =>
+          intelligentDiagnosisSearch({
+            query: dx.description,
+            // You might add a filter here if the system is known
+          })
+        );
+        const results = await Promise.all(promises);
+        const allConverted = results.flatMap((res) => res.results);
+        
+        // Simple mapping for demonstration
+        const finalConverted = report.diagnoses.map(dx => {
+            const match = allConverted.find(c => c.description.toLowerCase().includes(dx.description.toLowerCase()));
+            return {
+                namasteCode: report.reportType === 'Namaste' ? dx.code : (match?.namasteCode || 'N/A'),
+                icd11Code: report.reportType === 'ICD-11' ? dx.code : (match?.icd11Code || 'N/A'),
+                description: dx.description,
+            }
+        });
+
+        setConvertedData(finalConverted);
+        toast({
+          title: "Conversion Successful",
+          description: `Converted ${report.diagnoses.length} diagnoses.`,
+        });
+      } catch (error) {
+        console.error("Conversion failed:", error);
+        toast({
+          variant: "destructive",
+          title: "Conversion Failed",
+          description: "Could not convert codes. Please try again.",
+        });
+      }
+    });
+  };
+
+  const targetFormat = report.reportType === "ICD-11" ? "Namaste" : "ICD-11";
+
+  return (
+    <div className="space-y-6 p-2">
+      <CardHeader className="p-0">
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className="text-2xl">
+              Patient Report: {report.patientName}
+            </CardTitle>
+            <CardDescription>
+              Patient ID: {report.id} | DOB: {report.dob} | Gender:{" "}
+              {report.gender}
+            </CardDescription>
+          </div>
+           <Badge variant={report.reportType === 'ICD-11' ? 'secondary' : 'default'} className="text-sm">{report.reportType} Report</Badge>
+        </div>
+      </CardHeader>
+      
+      <Separator />
+
+      <div className="grid md:grid-cols-2 gap-6">
+        <div className="space-y-4">
+          <h3 className="font-semibold text-lg">Chief Complaint</h3>
+          <p className="text-muted-foreground">{report.chiefComplaint}</p>
+        </div>
+        <div className="space-y-4">
+          <h3 className="font-semibold text-lg">Vitals</h3>
+          <ul className="list-disc list-inside text-muted-foreground space-y-1">
+            {Object.entries(report.vitals).map(([key, value]) => (
+              <li key={key}>
+                <span className="font-medium text-foreground capitalize">{key.replace(/([A-Z])/g, ' $1')}:</span> {value}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>Diagnoses</CardTitle>
+              <CardDescription>
+                Official diagnoses recorded for this patient.
+              </CardDescription>
+            </div>
+            <Button onClick={handleConversion} disabled={isPending} size="sm">
+              {isPending ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <ArrowRightLeft className="mr-2 h-4 w-4" />
+              )}
+              Convert to {targetFormat}
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+            <div className="space-y-2">
+                <h4 className="font-semibold text-center pb-2 border-b">Original Diagnoses ({report.reportType})</h4>
+                 <ul className="space-y-2">
+                    {report.diagnoses.map((dx, index) => (
+                    <li key={index} className="p-2 rounded-md bg-muted/50">
+                        <p className="font-semibold">{dx.description}</p>
+                        <p className="text-sm text-muted-foreground">Code: {dx.code}</p>
+                    </li>
+                    ))}
+                </ul>
+            </div>
+            <div className="space-y-2">
+                 <h4 className="font-semibold text-center pb-2 border-b">Converted Diagnoses ({targetFormat})</h4>
+                 {isPending && (
+                     <div className="space-y-2 pt-2">
+                         <Skeleton className="h-12 w-full" />
+                         <Skeleton className="h-12 w-full" />
+                     </div>
+                 )}
+                 {convertedData && (
+                     <ul className="space-y-2">
+                        {convertedData.map((dx, index) => (
+                        <li key={index} className="p-2 rounded-md bg-accent/50">
+                            <p className="font-semibold">{dx.description}</p>
+                            <p className="text-sm text-accent-foreground">Code: {report.reportType === 'ICD-11' ? dx.namasteCode : dx.icd11Code}</p>
+                        </li>
+                        ))}
+                    </ul>
+                 )}
+                 {!isPending && !convertedData && (
+                     <div className="flex items-center justify-center h-full text-muted-foreground text-center">
+                         <p>Click the convert button to see the {targetFormat} codes.</p>
+                     </div>
+                 )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+      
+      <div className="space-y-2">
+        <h3 className="font-semibold text-lg">Clinician&apos;s Notes</h3>
+        <p className="text-muted-foreground whitespace-pre-wrap">{report.notes}</p>
+      </div>
+
+    </div>
+  );
+}

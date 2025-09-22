@@ -11,13 +11,20 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { LogOut, Settings, User } from "lucide-react";
+import { LogOut, Settings, User, UserCheck, UserCog } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { Switch } from "../ui/switch";
+import { Label } from "../ui/label";
+import React from "react";
 
 export default function AppHeader() {
   const pathname = usePathname();
+  const [isDoctorView, setIsDoctorView] = React.useState(true);
 
   const getPageTitle = () => {
+    if (pathname.startsWith("/patients")) {
+      return "Patient Records";
+    }
     switch (pathname) {
       case "/dashboard":
         return "Dashboard";
@@ -31,7 +38,7 @@ export default function AppHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-sm md:px-6">
+    <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-sm sm:px-6">
       <div className="md:hidden">
         <SidebarTrigger />
       </div>
@@ -41,6 +48,12 @@ export default function AppHeader() {
         </h1>
       </div>
       <div className="ml-auto flex items-center gap-4">
+         <div className="flex items-center space-x-2">
+            <UserCheck className="text-muted-foreground" />
+            <Switch id="role-switcher" checked={isDoctorView} onCheckedChange={setIsDoctorView} />
+            <UserCog className="text-muted-foreground" />
+            <Label htmlFor="role-switcher" className="sr-only">Toggle View</Label>
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-9 w-9 rounded-full">
@@ -57,10 +70,10 @@ export default function AppHeader() {
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
                 <p className="text-sm font-medium leading-none">
-                  Healthcare Provider
+                  Dr. Anya Sharma
                 </p>
                 <p className="text-xs leading-none text-muted-foreground">
-                  provider@ayulink.com
+                  doctor.anya@ayulink.com
                 </p>
               </div>
             </DropdownMenuLabel>
