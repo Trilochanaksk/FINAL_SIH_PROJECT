@@ -1,7 +1,6 @@
 
 "use client";
 
-import { Suspense } from 'react';
 import {
   Card,
   CardContent,
@@ -9,9 +8,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import PatientFilesWrapper, { PatientFilesSkeleton } from '@/components/patients/patient-files-wrapper';
+import PatientFiles from "@/components/patients/patient-files";
+import { type PatientFile } from "@/lib/patient-data";
 
-export default function PatientDashboard() {
+export default function PatientDashboard({ files }: { files: PatientFile[] }) {
     return (
          <div className="flex flex-col gap-8">
             <h1 className="text-3xl font-bold tracking-tight">My Health Dashboard</h1>
@@ -21,9 +21,7 @@ export default function PatientDashboard() {
                     <CardDescription>A list of your personal medical reports.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                     <Suspense fallback={<PatientFilesSkeleton />}>
-                        <PatientFilesWrapper query="PAT-001" />
-                    </Suspense>
+                    <PatientFiles files={files} query="PAT-001" />
                 </CardContent>
             </Card>
         </div>
