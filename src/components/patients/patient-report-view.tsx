@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { useState, useTransition } from "react";
@@ -187,4 +186,3 @@ export default function PatientReportView({ report }: { report: PatientFile }) {
     </div>
   );
 }
-

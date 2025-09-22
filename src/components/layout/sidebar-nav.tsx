@@ -8,9 +8,14 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, Users, FileText, Search, Settings } from "lucide-react";
+import { LayoutDashboard, Users, FileText, Search, Settings, Home } from "lucide-react";
 
 const doctorMenuItems = [
+   {
+    href: "/",
+    icon: Home,
+    label: "Homepage",
+  },
   {
     href: "/dashboard",
     icon: LayoutDashboard,
@@ -39,6 +44,11 @@ const doctorMenuItems = [
 ];
 
 const patientMenuItems = [
+   {
+    href: "/",
+    icon: Home,
+    label: "Homepage",
+  },
   {
     href: "/dashboard",
     icon: LayoutDashboard,
@@ -63,7 +73,7 @@ export function DoctorSidebarNav() {
         <SidebarMenuItem key={item.href}>
           <SidebarMenuButton
             asChild
-            isActive={pathname === item.href}
+            isActive={pathname === item.href && item.href !== '/'}
             tooltip={item.label}
           >
             <Link href={`${item.href}?role=${role}`}>
@@ -88,7 +98,7 @@ export function PatientSidebarNav() {
         <SidebarMenuItem key={item.href}>
           <SidebarMenuButton
             asChild
-            isActive={pathname === item.href}
+            isActive={pathname === item.href && item.href !== '/'}
             tooltip={item.label}
           >
             <Link href={`${item.href}?role=${role}`}>

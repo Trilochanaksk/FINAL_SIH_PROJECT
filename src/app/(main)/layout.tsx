@@ -3,7 +3,7 @@
 
 import { useSearchParams } from "next/navigation";
 import AppHeader from "@/components/layout/app-header";
-import { SidebarNav, DoctorSidebarNav, PatientSidebarNav } from "@/components/layout/sidebar-nav";
+import { DoctorSidebarNav, PatientSidebarNav } from "@/components/layout/sidebar-nav";
 import { Logo } from "@/components/icons/logo";
 import {
   SidebarProvider,
@@ -31,10 +31,10 @@ export default function MainLayout({
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader>
-          <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <Logo className="size-8 text-primary" />
             <span className="text-xl font-semibold tracking-tight">AyuLink</span>
-          </div>
+          </Link>
         </SidebarHeader>
         <Separator />
         <SidebarContent>

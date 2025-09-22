@@ -70,7 +70,7 @@ export async function searchWhoIcd11(query: string): Promise<WhoIcd11Record[]> {
   await new Promise(resolve => setTimeout(resolve, 250));
 
   const results = mockData.filter((item: any) => {
-    const description = item.description || "";
+    const description = item.description || item.Long_definition || item.Short_definition || item.NUMC_TERM || "";
     const icd11Code = item.icd11Code || "";
     const queryLower = query.toLowerCase();
 
@@ -79,7 +79,7 @@ export async function searchWhoIcd11(query: string): Promise<WhoIcd11Record[]> {
   
   const mappedResults = results.map((item: any) => ({
     icd11Code: item.icd11Code || 'N/A',
-    description: item.description,
+    description: item.description || item.Long_definition || item.Short_definition || item.NUMC_TERM,
   })).filter(item => item.icd11Code !== 'N/A');
 
   // Remove duplicates
