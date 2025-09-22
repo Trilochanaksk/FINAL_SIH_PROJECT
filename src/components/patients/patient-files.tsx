@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -17,16 +19,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { FilePlus2, FileText, User } from "lucide-react";
 import PatientReportView from "./patient-report-view";
-import { samplePatientFiles } from "@/lib/patient-data";
+import { type PatientFile } from "@/lib/patient-data";
 import { Badge } from "../ui/badge";
 
-export default async function PatientFiles({ query }: { query: string }) {
-  // In a real app, you would fetch this data from a database
-  const files = samplePatientFiles.filter(
-    (file) =>
-      file.id.toLowerCase().includes(query.toLowerCase()) ||
-      file.patientName.toLowerCase().includes(query.toLowerCase())
-  );
+export default function PatientFiles({ files, query }: { files: PatientFile[], query: string }) {
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

@@ -2,6 +2,7 @@
 "use client";
 
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import {
   Card,
   CardContent,
@@ -26,7 +27,8 @@ import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Legend, ResponsiveContainer
 import type { ChartConfig } from "@/components/ui/chart";
 import { Badge } from "@/components/ui/badge";
 import { Activity, FileText, Users, Syringe } from 'lucide-react';
-import PatientFiles from '@/components/patients/patient-files';
+import PatientFilesWrapper, { PatientFilesSkeleton } from '@/components/patients/patient-files-wrapper';
+
 
 const chartData = [
   { month: "January", ayurveda: 186, siddha: 80, unani: 50 },
@@ -238,7 +240,9 @@ function DoctorDashboard() {
                     <CardDescription>Recently accessed patient files.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <PatientFiles query="" />
+                    <Suspense fallback={<PatientFilesSkeleton />}>
+                        <PatientFilesWrapper query="" />
+                    </Suspense>
                 </CardContent>
             </Card>
         </div>
@@ -255,7 +259,9 @@ function PatientDashboard() {
                     <CardDescription>A list of your personal medical reports.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                     <PatientFiles query="PAT-001" />
+                     <Suspense fallback={<PatientFilesSkeleton />}>
+                        <PatientFilesWrapper query="PAT-001" />
+                    </Suspense>
                 </CardContent>
             </Card>
         </div>
