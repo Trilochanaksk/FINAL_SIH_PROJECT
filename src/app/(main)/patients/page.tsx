@@ -19,7 +19,7 @@ export default function PatientsPage({ searchParams }: PatientsPageProps) {
   const query = searchParams?.query || "";
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 animate-fadeIn">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Patient Records</h1>
@@ -27,7 +27,7 @@ export default function PatientsPage({ searchParams }: PatientsPageProps) {
             Search, view, and manage patient files.
           </p>
         </div>
-        <PatientSearch placeholder="Search by Patient ID..." />
+        <PatientSearch placeholder="Search by Patient ID or Name..." />
       </div>
 
       <Card>

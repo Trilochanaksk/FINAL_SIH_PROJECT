@@ -20,11 +20,14 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
     return <PatientDashboard files={patientFiles} />;
   }
   
+  // In a real app, you would fetch this data from a database
   const files = samplePatientFiles.filter(
     (file) =>
       file.id.toLowerCase().includes("".toLowerCase()) ||
       file.patientName.toLowerCase().includes("".toLowerCase())
   );
+  
+  // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 500));
 
   return <DoctorDashboard files={files} />;
