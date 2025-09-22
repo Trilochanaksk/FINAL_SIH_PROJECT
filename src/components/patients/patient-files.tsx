@@ -1,3 +1,4 @@
+
 "use client";
 
 import {
@@ -26,32 +27,6 @@ export default function PatientFiles({ files, query }: { files: PatientFile[], q
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      <Dialog>
-        <DialogTrigger asChild>
-          <Card className="flex flex-col items-center justify-center text-center p-6 border-dashed hover:border-primary hover:text-primary transition-colors cursor-pointer">
-            <FilePlus2 className="h-12 w-12 text-muted-foreground" />
-            <CardTitle className="mt-4">Upload New File</CardTitle>
-            <CardDescription className="mt-1">
-              Add a new patient report to the system.
-            </CardDescription>
-          </Card>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Upload Patient File</DialogTitle>
-            <DialogDescription>
-              Select a file to upload. This feature is a placeholder for a real
-              file upload implementation.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="py-4">
-            <p className="text-sm text-muted-foreground text-center">
-              File upload functionality would be implemented here.
-            </p>
-          </div>
-        </DialogContent>
-      </Dialog>
-
       {files.map((file) => (
         <Dialog key={file.id}>
           <DialogTrigger asChild>
@@ -68,6 +43,9 @@ export default function PatientFiles({ files, query }: { files: PatientFile[], q
                 </div>
                 <div className="text-sm text-muted-foreground">
                   DOB: {file.dob}
+                </div>
+                 <div className="text-sm text-muted-foreground pt-2 font-medium">
+                  {file.diagnoses.map(d => d.description).join(', ')}
                 </div>
               </CardContent>
               <CardFooter>

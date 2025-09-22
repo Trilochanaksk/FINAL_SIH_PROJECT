@@ -8,7 +8,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, Users, FileText, Search, Settings, Home } from "lucide-react";
+import { LayoutDashboard, Users, FileText, Search, Settings, Home, FileUp } from "lucide-react";
 
 const doctorMenuItems = [
    {
@@ -35,6 +35,11 @@ const doctorMenuItems = [
     href: "/search",
     icon: Search,
     label: "Diagnosis Search",
+  },
+   {
+    href: "/upload",
+    icon: FileUp,
+    label: "Upload Report",
   },
   {
     href: "/settings",

@@ -34,7 +34,7 @@ export const samplePatientFiles: PatientFile[] = [
       respiratoryRate: "18 breaths/min",
     },
     diagnoses: [
-      { code: "M65", description: "Rheumatoid Arthritis" },
+      { code: "M65", description: "Amavata (Rheumatoid Arthritis)" },
     ],
     notes:
       "Patient reports that the pain is worse in the morning. Physical examination reveals inflammation in multiple joints. Suspected Amavata. Recommending further tests and a follow-up.",
@@ -90,8 +90,44 @@ export const samplePatientFiles: PatientFile[] = [
       respiratoryRate: "18 breaths/min",
     },
     diagnoses: [
-        { code: "M15", description: "Polyarthritis" }
+        { code: "M15", description: "Waja-ul-Mafasil (Polyarthritis)" }
     ],
     notes: "Clinical presentation suggests Waja-ul-Mafasil. Patient has a family history of autoimmune disorders. Ordered blood tests to confirm diagnosis and will start on Unani treatment protocol.",
+  },
+    {
+    id: "PAT-005",
+    patientName: "David Chen",
+    dob: "1965-09-22",
+    gender: "Male",
+    reportType: "Namaste",
+    chiefComplaint: "Pain radiating along the sciatic nerve.",
+    vitals: {
+      bloodPressure: "140/90 mmHg",
+      heartRate: "76 bpm",
+      temperature: "37.1°C",
+      respiratoryRate: "17 breaths/min",
+    },
+    diagnoses: [
+        { code: "NAM-AY-101", description: "Gridhrasi (Sciatica)" }
+    ],
+    notes: "Patient presents with classic symptoms of Gridhrasi. Physical therapy and Ayurvedic oil massage (Abhyanga) recommended. Follow-up in 2 weeks.",
+  },
+  {
+    id: "PAT-006",
+    patientName: "Emily White",
+    dob: "1988-03-18",
+    gender: "Female",
+    reportType: "ICD-11",
+    chiefComplaint: "Chronic rhinitis with nasal discharge and headache.",
+    vitals: {
+      bloodPressure: "120/80 mmHg",
+      heartRate: "70 bpm",
+      temperature: "36.9°C",
+      respiratoryRate: "16 breaths/min",
+    },
+    diagnoses: [
+        { code: "J00", description: "Nazla (Common Cold)" }
+    ],
+    notes: "Patient has a history of allergies. Symptoms are consistent with Nazla. Unani treatment focusing on improving immunity and reducing inflammation prescribed. Advised to avoid cold and damp environments.",
   },
 ];
