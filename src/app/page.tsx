@@ -3,12 +3,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -23,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -30,6 +31,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("doctor.anya@ayulink.com");
   const [password, setPassword] = useState("password");
   const [role, setRole] = useState<"doctor" | "patient">("doctor");
+  const loginImage = PlaceHolderImages.find(p => p.id === "login-hero");
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,8 +40,6 @@ export default function LoginPage() {
         title: "Login Successful",
         description: `Welcome back, Dr. Sharma!`,
       });
-      // In a real app, you'd manage session state here.
-      // We'll use a simple query param to simulate the role.
       router.push(`/dashboard?role=${role}`);
     } else if (role === 'patient' && email === "patient.john@ayulink.com" && password === "password") {
       toast({
@@ -67,23 +67,23 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-muted/30">
-      <Card className="w-full max-w-md shadow-2xl">
-        <form onSubmit={handleLogin}>
-          <CardHeader className="text-center space-y-2 py-8">
-            <div className="flex justify-center items-center gap-3 mb-4">
-               <Logo className="size-12 text-primary" />
+    <div className="w-full min-h-screen lg:grid lg:grid-cols-2">
+      <div className="flex items-center justify-center py-12">
+        <div className="mx-auto grid w-[350px] gap-6">
+          <div className="grid gap-2 text-center">
+             <div className="flex justify-center items-center gap-2 mb-2">
+               <Logo className="size-8 text-primary" />
+                <h1 className="text-3xl font-bold tracking-tight">AyuLink</h1>
             </div>
-            <CardTitle className="text-3xl font-bold tracking-tight">Welcome to AyuLink</CardTitle>
-            <CardDescription className="text-base text-muted-foreground">
-              Bridging Traditional and Modern Medicine
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-6 p-6">
+            <p className="text-balance text-muted-foreground">
+              Enter your credentials to access your account
+            </p>
+          </div>
+          <form onSubmit={handleLogin} className="grid gap-4">
              <div className="grid gap-2">
                 <Label htmlFor="role">Your Role</Label>
                  <Select value={role} onValueChange={handleRoleChange}>
-                    <SelectTrigger className="h-11">
+                    <SelectTrigger>
                         <SelectValue placeholder="Select your role" />
                     </SelectTrigger>
                     <SelectContent>
@@ -93,7 +93,7 @@ export default function LoginPage() {
                 </Select>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="email">Email Address</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -101,28 +101,44 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-11 text-base"
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
+              <div className="flex items-center">
+                <Label htmlFor="password">Password</Label>
+                <a
+                  href="#"
+                  className="ml-auto inline-block text-sm underline"
+                >
+                  Forgot your password?
+                </a>
+              </div>
               <Input 
                 id="password" 
                 type="password" 
                 required 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="h-11 text-base"
               />
             </div>
-          </CardContent>
-          <CardFooter className="p-6 pt-0">
-            <Button type="submit" className="w-full h-12 text-lg font-semibold">
-              Sign In
+            <Button type="submit" className="w-full">
+              Login
             </Button>
-          </CardFooter>
-        </form>
-      </Card>
+          </form>
+        </div>
+      </div>
+      <div className="hidden bg-muted lg:block">
+        {loginImage && (
+            <Image
+            src={loginImage.imageUrl}
+            alt={loginImage.description}
+            width="1920"
+            height="1080"
+            className="h-full w-full object-cover dark:brightness-[0.3] dark:grayscale"
+            data-ai-hint={loginImage.imageHint}
+            />
+        )}
+      </div>
     </div>
   );
 }

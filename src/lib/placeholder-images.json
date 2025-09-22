@@ -1,3 +1,11 @@
+
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+        "id": "login-hero",
+        "description": "A doctor in a modern, clean medical office looking at a tablet.",
+        "imageUrl": "https://picsum.photos/seed/med-login/1920/1080",
+        "imageHint": "doctor office"
+    }
+  ]
 }
