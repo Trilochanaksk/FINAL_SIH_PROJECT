@@ -28,18 +28,19 @@ export async function searchNamaste(query: string, filter?: 'Ayurveda' | 'Siddha
       const data = await response.json();
       const parsedData = z.array(NamasteRecord).safeParse(data);
       if (parsedData.success) {
-        return parsedData.data;
+        // Only return if we have actual data
+        if(parsedData.data.length > 0) return parsedData.data;
       } else {
-        console.error("Failed to parse NAMASTE API response:", parsedData.error);
+        console.error("Failed to parse NAMASTE API response:", parsedData.error.toString());
       }
     } else {
-      console.error('Failed to get data from NAMASTE service. Status:', response.status);
+      console.error('Failed to get data from NAMASTE service. Status:', response.status, await response.text());
     }
-  } catch (error) {
-    console.error("An error occurred in the NAMASTE service.", error);
+  } catch (error: any) {
+    console.error("An error occurred in the NAMASTE service.", error.message);
   }
 
-  // Fallback to mock data if the API call fails.
+  // Fallback to mock data if the API call fails or returns no data.
   console.log("Falling back to mock data for NAMASTE search.");
   const mockData: NamasteRecord[] = [
     { namasteCode: 'NAM-AY-123', description: 'Amavata (Rheumatoid Arthritis)', system: 'Ayurveda' },

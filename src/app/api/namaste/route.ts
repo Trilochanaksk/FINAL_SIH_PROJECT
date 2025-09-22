@@ -10,10 +10,6 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "Missing NAMASTE_API_KEY in environment" }, { status: 500 });
   }
 
-  // The x-api-key for this API seems to be incorrect based on common practice.
-  // APIs typically use 'Authorization': 'Bearer <key>' or a custom header.
-  // Using 'x-api-key' as specified in the original code. If issues persist,
-  // this might be the area to investigate with the API provider.
   const searchUrl = `https://api.namaste.gov.in/search?q=${encodeURIComponent(q)}${
     system ? `&system=${system}` : ""
   }`;
