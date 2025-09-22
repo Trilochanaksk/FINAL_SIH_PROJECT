@@ -3,32 +3,32 @@
   "placeholderImages": [
     {
       "id": "login-hero",
-      "description": "A calm and professional medical environment with a doctor reviewing data on a screen.",
-      "imageUrl": "https://picsum.photos/seed/science/1920/1080",
-      "imageHint": "medical technology"
+      "description": "A professional doctor in a modern clinic, looking at the camera.",
+      "imageUrl": "https://picsum.photos/seed/doctor/1920/1080",
+      "imageHint": "doctor professional"
     },
     {
       "id": "landing-hero",
-      "description": "A diverse team of medical professionals collaborating in a modern hospital setting.",
-      "imageUrl": "https://picsum.photos/seed/medteam/1200/800",
-      "imageHint": "medical team"
+      "description": "A bright and modern medical laboratory with advanced equipment.",
+      "imageUrl": "https://picsum.photos/seed/medicallab/1200/800",
+      "imageHint": "medical lab"
     },
     {
       "id": "feature-1",
-      "description": "A close-up of a doctor's hands typing on a laptop with medical charts on the screen.",
-      "imageUrl": "https://picsum.photos/seed/medtyping/600/600",
-      "imageHint": "medical data"
+      "description": "A close-up of a doctor reviewing patient data on a tablet.",
+      "imageUrl": "https://picsum.photos/seed/doctortablet/600/600",
+      "imageHint": "doctor data"
     },
      {
       "id": "feature-2",
-      "description": "A patient consulting with a doctor in a bright, modern clinic room.",
-      "imageUrl": "https://picsum.photos/seed/consultation/600/600",
+      "description": "An empathetic doctor consulting with a patient in a clinic.",
+      "imageUrl": "https://picsum.photos/seed/doctorpatient/600/600",
       "imageHint": "patient doctor"
     },
      {
       "id": "feature-3",
-      "description": "An overhead shot of lab equipment and scientific instruments in a research facility.",
-      "imageUrl": "https://picsum.photos/seed/lab/600/600",
+      "description": "A researcher working with test tubes and scientific equipment in a lab.",
+      "imageUrl": "https://picsum.photos/seed/research/600/600",
       "imageHint": "medical research"
     }
   ]
