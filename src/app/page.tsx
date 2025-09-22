@@ -42,21 +42,21 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-muted/40">
-      <Card className="w-full max-w-sm">
+    <div className="flex items-center justify-center min-h-screen bg-muted">
+      <Card className="w-full max-w-sm shadow-lg">
         <form onSubmit={handleLogin}>
-          <CardHeader className="text-center">
-            <div className="flex justify-center items-center gap-2 mb-4">
-               <Logo className="size-10 text-primary" />
+          <CardHeader className="text-center space-y-4 py-8">
+            <div className="flex justify-center items-center gap-3 mb-2">
+               <Logo className="size-12 text-primary" />
             </div>
-            <CardTitle className="text-2xl">Welcome to AyuLink</CardTitle>
-            <CardDescription>
-              Enter your credentials to access the platform.
+            <CardTitle className="text-3xl font-bold">Welcome to AyuLink</CardTitle>
+            <CardDescription className="text-base">
+              Your EMR Integration Platform
             </CardDescription>
           </CardHeader>
-          <CardContent className="grid gap-4">
+          <CardContent className="grid gap-6 p-6">
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">Email Address</Label>
               <Input
                 id="email"
                 type="email"
@@ -64,6 +64,7 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="h-11"
               />
             </div>
             <div className="grid gap-2">
@@ -74,12 +75,13 @@ export default function LoginPage() {
                 required 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="h-11"
               />
             </div>
           </CardContent>
-          <CardFooter>
-            <Button type="submit" className="w-full">
-              Sign in
+          <CardFooter className="p-6">
+            <Button type="submit" className="w-full h-11 text-lg">
+              Sign In
             </Button>
           </CardFooter>
         </form>

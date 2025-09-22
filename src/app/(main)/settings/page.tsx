@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -24,6 +25,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
+import { LogOut } from "lucide-react";
 
 const profileFormSchema = z.object({
   name: z.string().min(2, {
@@ -43,6 +45,7 @@ type AppearanceFormValues = z.infer<typeof appearanceFormSchema>;
 
 export default function SettingsPage() {
   const { toast } = useToast();
+  const router = useRouter();
 
   const profileForm = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
@@ -61,6 +64,14 @@ export default function SettingsPage() {
       language: "en-us",
     },
   });
+  
+  const handleLogout = () => {
+    toast({
+      title: "Logged Out",
+      description: "You have been successfully logged out.",
+    });
+    router.push('/'); 
+  }
 
   function onProfileSubmit(data: ProfileFormValues) {
     toast({
@@ -86,8 +97,6 @@ export default function SettingsPage() {
         </p>
       </div>
       
-      <Separator />
-
       <Card>
         <CardHeader>
           <CardTitle>Profile</CardTitle>
@@ -178,7 +187,7 @@ export default function SettingsPage() {
                         Dark Mode
                       </FormLabel>
                       <FormDescription>
-                       Enable dark mode for the application. This feature is for demonstration.
+                       Enable dark mode for the application.
                       </FormDescription>
                     </div>
                     <FormControl>
@@ -193,6 +202,21 @@ export default function SettingsPage() {
               <Button type="submit">Update appearance</Button>
             </form>
           </Form>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Account Actions</CardTitle>
+          <CardDescription>
+            Log out of your account.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+           <Button variant="destructive" onClick={handleLogout}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Log Out
+            </Button>
         </CardContent>
       </Card>
 
