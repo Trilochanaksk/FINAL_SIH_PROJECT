@@ -32,7 +32,7 @@ export async function searchNamaste(query: string, filter?: 'Ayurveda' | 'Siddha
           console.error("Failed to parse NAMASTE API response:", parsedData.error);
         }
       } else {
-        console.error('Failed to fetch from NAMASTE API', await response.text());
+        console.error('Failed to fetch from NAMASTE API:', response.status, await response.text());
       }
     } catch (error) {
       console.error("Error calling NAMASTE API:", error);
