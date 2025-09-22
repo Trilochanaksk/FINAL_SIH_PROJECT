@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { GET } from '@/app/api/namaste/route';
 
 export const NamasteRecord = z.object({
   namasteCode: z.string(),
@@ -7,46 +8,38 @@ export const NamasteRecord = z.object({
 });
 export type NamasteRecord = z.infer<typeof NamasteRecord>;
 
-export async function searchNamaste(query: string, filter?: 'Ayurveda' | 'Siddha' | 'Unani'): Promise<NamasteRecord[]> {
-  const apiKey = process.env.NAMASTE_API_KEY;
-  
-  // Always try to fetch from the live API first.
-  if (apiKey) {
-    const searchUrl = `https://api.namaste.gov.in/search?q=${encodeURIComponent(query)}${filter ? `&system=${filter}`: ''}`;
-    console.log(`Attempting to fetch NAMASTE data from: ${searchUrl}`);
-
-    try {
-      const response = await fetch(searchUrl, {
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Accept': 'application/json',
-        },
-      });
-
-      if (response.ok) {
-        console.log("Successfully fetched data from NAMASTE API.");
-        const data = await response.json();
-        const parsedData = z.array(NamasteRecord).safeParse(data);
-
-        if (parsedData.success) {
-          return parsedData.data;
-        } else {
-          console.error("Failed to parse NAMASTE API response:", parsedData.error);
-        }
-      } else {
-        console.error('Failed to fetch from NAMASTE API. Status:', response.status, 'Response:', await response.text());
-      }
-    } catch (error: any) {
-      console.error("An error occurred during the fetch operation to the NAMASTE API.", {
-        message: error.message,
-        cause: error.cause, // This often contains more detailed network-level error info
-        stack: error.stack,
-      });
-      // Fall through to mock data if the API call fails
+// A mock Request object to satisfy the API handler's signature.
+function createMockRequest(query: string, filter?: string): Request {
+    const url = new URL('http://localhost/api/namaste');
+    url.searchParams.set('q', query);
+    if (filter) {
+        url.searchParams.set('system', filter);
     }
+    return new Request(url);
+}
+
+export async function searchNamaste(query: string, filter?: 'Ayurveda' | 'Siddha' | 'Unani'): Promise<NamasteRecord[]> {
+  try {
+    // Directly invoke the route handler instead of a network fetch.
+    const mockRequest = createMockRequest(query, filter);
+    const response = await GET(mockRequest);
+
+    if (response.ok) {
+      const data = await response.json();
+      const parsedData = z.array(NamasteRecord).safeParse(data);
+      if (parsedData.success) {
+        return parsedData.data;
+      } else {
+        console.error("Failed to parse NAMASTE API response:", parsedData.error);
+      }
+    } else {
+      console.error('Failed to get data from NAMASTE service. Status:', response.status);
+    }
+  } catch (error) {
+    console.error("An error occurred in the NAMASTE service.", error);
   }
 
-  // Fallback to mock data if API key is missing or API call fails.
+  // Fallback to mock data if the API call fails.
   console.log("Falling back to mock data for NAMASTE search.");
   const mockData: NamasteRecord[] = [
     { namasteCode: 'NAM-AY-123', description: 'Amavata (Rheumatoid Arthritis)', system: 'Ayurveda' },
