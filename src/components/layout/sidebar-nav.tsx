@@ -7,7 +7,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, Users, FileText, Search } from "lucide-react";
+import { LayoutDashboard, Users, FileText, Search, Settings } from "lucide-react";
 
 const menuItems = [
   {
@@ -30,6 +30,11 @@ const menuItems = [
     icon: Search,
     label: "Diagnosis Search",
   },
+  {
+    href: "/settings",
+    icon: Settings,
+    label: "Settings",
+  }
 ];
 
 export function SidebarNav() {
