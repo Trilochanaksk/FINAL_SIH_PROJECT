@@ -16,7 +16,18 @@ export async function searchNamaste(query: string, filter?: 'Ayurveda' | 'Siddha
   
   const results = mockData.filter((item: any) => {
     const description = item.description || item.Long_definition || item.Short_definition || item.NUMC_TERM || "";
-    return description.toLowerCase().includes(query.toLowerCase());
+    const arabicTerm = item.Arabic_term || "";
+    const numcCode = item.NUMC_CODE || "";
+    const namasteCode = item.namasteCode || "";
+
+    const queryLower = query.toLowerCase();
+
+    return (
+      description.toLowerCase().includes(queryLower) ||
+      arabicTerm.toLowerCase().includes(queryLower) ||
+      numcCode.toLowerCase().includes(queryLower) ||
+      namasteCode.toLowerCase().includes(queryLower)
+    );
   });
 
   const mappedResults = results.map((item: any) => ({

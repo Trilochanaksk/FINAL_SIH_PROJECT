@@ -85,11 +85,11 @@ export async function searchWhoIcd11(query: string): Promise<WhoIcd11Record[]> {
     }
 
     return data.destinationEntities.map((entity: any) => {
-        const titleMatch = entity.title.match(/<em class='found'>(.*?)<\/em>/);
-        const title = titleMatch ? titleMatch[1] : entity.title;
+        // Strip HTML tags from the title
+        const description = entity.title.replace(/<[^>]*>/g, '');
         return {
             icd11Code: entity.theCode || entity.id.split('/').pop(),
-            description: title,
+            description: description,
         }
     });
   } catch (error) {

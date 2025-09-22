@@ -18,7 +18,7 @@ import { searchWhoIcd11, WhoIcd11Record } from '@/services/who-api';
 const namasteSearchTool = ai.defineTool(
   {
     name: 'namasteSearchTool',
-    description: 'Search for NAMASTE codes.',
+    description: 'Search for NAMASTE codes. Use this to find traditional medicine terms.',
     inputSchema: z.object({
       query: z.string().describe('The search query for NAMASTE codes.'),
       filter: z.enum(['Ayurveda', 'Siddha', 'Unani']).optional().describe('The filter to apply.'),
@@ -33,7 +33,7 @@ const namasteSearchTool = ai.defineTool(
 const whoIcd11SearchTool = ai.defineTool(
   {
     name: 'whoIcd11SearchTool',
-    description: 'Search for WHO ICD-11 codes.',
+    description: 'Search for WHO ICD-11 codes. Use this to find modern medical codes.',
     inputSchema: z.object({
       query: z.string().describe('The search query for WHO ICD-11 codes.'),
     }),
@@ -73,12 +73,17 @@ const prompt = ai.definePrompt({
   input: {schema: IntelligentDiagnosisSearchInputSchema},
   output: {schema: IntelligentDiagnosisSearchOutputSchema},
   tools: [namasteSearchTool, whoIcd11SearchTool],
-  prompt: `You are a medical diagnosis search assistant. Provide dual-code suggestions from both NAMASTE (National AYUSH Morbidity & Standardized Terminologies Electronic) and ICD-11 TM2 (Traditional Medicine Module 2), filtered by the user specified filter.
+  prompt: `You are a medical diagnosis search assistant. Your task is to provide dual-code suggestions from both NAMASTE and ICD-11 TM2.
 
-  Use the provided tools to search for relevant codes based on the user's query. Then, correlate the results to provide the best matching pairs of NAMASTE and ICD-11 codes.
+  1. First, use the 'namasteSearchTool' to find traditional medicine diagnoses based on the user's query and filter.
+  2. For each NAMASTE result, use the 'whoIcd11SearchTool' with the same original query to find the most relevant ICD-11 code.
+  3. Correlate the results. For each NAMASTE diagnosis, find the best matching ICD-11 diagnosis.
+  4. If you find a good match, create a result object with the NAMASTE code, the corresponding ICD-11 code, and the NAMASTE description.
+  5. If no ICD-11 match is found for a NAMASTE result, use 'N/A' for the icd11Code.
+  6. Return a list of these correlated results. Prioritize creating pairs even if the match isn't perfect, to provide the user with options.
 
-  The query is: {{{query}}}
-  The filter is: {{{filter}}}
+  User Query: {{{query}}}
+  Filter: {{{filter}}}
 `,
 });
 
