@@ -80,6 +80,9 @@ export default async function PatientFiles({ query }: { query: string }) {
             </Card>
           </DialogTrigger>
           <DialogContent className="max-w-4xl">
+            <DialogTitle className="sr-only">
+                Patient Report: {file.patientName} ({file.id})
+            </DialogTitle>
             <PatientReportView report={file} />
           </DialogContent>
         </Dialog>
