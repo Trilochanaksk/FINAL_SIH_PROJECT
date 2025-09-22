@@ -1,3 +1,4 @@
+
 "use client";
 
 import {
@@ -14,11 +15,21 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { LogOut, Settings, User } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 export default function AppHeader() {
   const pathname = usePathname();
   const router = useRouter();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const getPageTitle = () => {
     if (pathname.startsWith("/patients")) {
@@ -44,7 +55,10 @@ export default function AppHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background px-4 sm:px-6">
+    <header className={cn(
+      "sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-xl sm:px-6 transition-all",
+      scrolled && "bg-background"
+    )}>
       <div className="md:hidden">
         <SidebarTrigger />
       </div>
