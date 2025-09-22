@@ -17,6 +17,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { Logo } from "../icons/logo";
 
 export default function AppHeader() {
   const pathname = usePathname();
@@ -27,11 +28,20 @@ export default function AppHeader() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    const mainContent = document.querySelector("main");
     const handleScroll = () => {
-      setScrolled(window.scrollY > 5);
+        if (mainContent) {
+            setScrolled(mainContent.scrollTop > 5);
+        }
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    if (mainContent) {
+        mainContent.addEventListener("scroll", handleScroll);
+    }
+    return () => {
+        if (mainContent) {
+            mainContent.removeEventListener("scroll", handleScroll);
+        }
+    }
   }, []);
   
   const getPageTitle = () => {
@@ -67,14 +77,17 @@ export default function AppHeader() {
       "sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-xl sm:px-6 transition-shadow",
       scrolled && "shadow-md"
     )}>
-      <div className="md:hidden">
-        <SidebarTrigger />
+      <div className="flex items-center gap-4">
+        <div className="md:hidden">
+            <SidebarTrigger />
+        </div>
+        <div className="hidden md:block">
+            <h1 className="text-xl font-semibold tracking-tight">
+            {getPageTitle()}
+            </h1>
+        </div>
       </div>
-      <div className="hidden md:block">
-        <h1 className="text-xl font-semibold tracking-tight">
-          {getPageTitle()}
-        </h1>
-      </div>
+
       <div className="ml-auto flex items-center gap-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
