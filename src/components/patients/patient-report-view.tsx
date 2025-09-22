@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useTransition } from "react";
@@ -163,7 +164,7 @@ export default function PatientReportView({ report }: { report: PatientFile }) {
                         {convertedData.map((dx, index) => (
                         <li key={index} className="p-2 rounded-md bg-accent/50">
                             <p className="font-semibold">{dx.description}</p>
-                            <p className="text-sm text-accent-foreground">Code: {report.reportType === 'ICD-11' ? dx.namasteCode : dx.icd11Code}</p>
+                            <p className="text-sm text-accent-foreground">Code: {report.reportType === 'Namaste' ? dx.icd11Code : dx.namasteCode}</p>
                         </li>
                         ))}
                     </ul>
@@ -186,3 +187,4 @@ export default function PatientReportView({ report }: { report: PatientFile }) {
     </div>
   );
 }
+
