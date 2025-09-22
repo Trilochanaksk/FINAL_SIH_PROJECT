@@ -75,7 +75,7 @@ export default function LoginPage() {
                 <h1 className="text-4xl font-bold tracking-tight">AyuLink</h1>
             </Link>
             <p className="text-balance text-muted-foreground text-lg">
-              Seamlessly connecting traditional and modern medicine.
+              Login to access your personalized dashboard.
             </p>
           </div>
           <form onSubmit={handleLogin} className="grid gap-6">

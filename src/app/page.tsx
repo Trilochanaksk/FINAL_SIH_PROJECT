@@ -11,10 +11,8 @@ export default function LandingPage() {
     <div className="flex flex-col min-h-screen bg-background">
       <header className="container mx-auto flex items-center justify-between h-20 px-4 md:px-6">
         <Link href="#" className="flex items-center gap-3">
-            <div className="p-2.5 bg-blue-600 rounded-lg">
-                <Heart className="size-6 text-white" />
-            </div>
-            <span className="text-2xl font-bold">AyuLink Portal</span>
+             <Logo className="size-9 text-primary" />
+            <span className="text-2xl font-bold">AyuLink</span>
         </Link>
         <div className="flex items-center gap-3">
             <Phone className="size-5 text-muted-foreground" />
@@ -27,17 +25,17 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-6 text-center">
               <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-                Advanced Healthcare Management System
+                Bridging Traditional and Modern Medicine
               </h1>
               <p className="max-w-[700px] text-lg md:text-xl">
-                Streamlined access for patients, doctors, and healthcare professionals
+                Streamlined access for patients, doctors, and healthcare professionals.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                  <Button size="lg" variant="secondary" className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm border border-white/30">
-                      <Hospital className="mr-2" /> Emergency Services
+                  <Button size="lg" variant="secondary" className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm border border-white/30" asChild>
+                      <Link href="#features"><Hospital className="mr-2" /> Emergency Services</Link>
                   </Button>
-                  <Button size="lg" variant="secondary" className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm border border-white/30">
-                     <File className="mr-2" /> Health Records
+                  <Button size="lg" variant="secondary" className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm border border-white/30" asChild>
+                     <Link href="/login?role=patient"><File className="mr-2" /> Health Records</Link>
                   </Button>
               </div>
             </div>
@@ -48,13 +46,13 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-                Choose Your Access Level
+                Choose Your Portal
               </h2>
               <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed">
-                Select the appropriate interface for your role
+                Select the appropriate interface for your role to get started.
               </p>
             </div>
-            <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 py-12 sm:grid-cols-2">
               <Card className="text-center hover:shadow-strong transition-shadow">
                 <CardHeader>
                   <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-green-100">
@@ -87,20 +85,6 @@ export default function LandingPage() {
                   </Button>
                 </CardContent>
               </Card>
-              <Card className="text-center hover:shadow-strong transition-shadow">
-                <CardHeader>
-                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-blue-100">
-                    <Users className="h-8 w-8 text-blue-600" />
-                  </div>
-                  <CardTitle className="mt-4">General Access</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    Public health information, resources, and general inquiries.
-                  </p>
-                  <Button className="mt-6 w-full">General Access</Button>
-                </CardContent>
-              </Card>
             </div>
           </div>
         </section>
@@ -112,7 +96,7 @@ export default function LandingPage() {
                 Medical Code Translator
               </h2>
               <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed">
-                Convert between Namaste and ICD codes
+                Convert between Namaste and ICD-11 codes instantly.
               </p>
             </div>
             <div className="mx-auto max-w-2xl py-12">
@@ -123,24 +107,16 @@ export default function LandingPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <Tabs defaultValue="namaste-icd">
-                    <TabsList className="grid w-full grid-cols-2">
-                      <TabsTrigger value="namaste-icd">Namaste → ICD</TabsTrigger>
-                      <TabsTrigger value="icd-namaste">ICD → Namaste</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="namaste-icd" className="mt-4">
-                      <div className="space-y-4">
-                        <Input placeholder="Enter Namaste code" />
-                        <Button className="w-full">Translate Code</Button>
-                      </div>
-                    </TabsContent>
-                    <TabsContent value="icd-namaste" className="mt-4">
-                      <div className="space-y-4">
-                        <Input placeholder="Enter ICD code" />
-                        <Button className="w-full">Translate Code</Button>
-                      </div>
-                    </TabsContent>
-                  </Tabs>
+                  <div className="text-center">
+                     <p className="text-muted-foreground mb-4">
+                        Our powerful AI-driven search tool helps you find and translate diagnosis codes seamlessly.
+                      </p>
+                      <Button asChild>
+                          <Link href="/search">
+                            Go to Diagnosis Search <ArrowRight className="ml-2" />
+                          </Link>
+                      </Button>
+                  </div>
                 </CardContent>
               </Card>
             </div>
@@ -209,9 +185,9 @@ export default function LandingPage() {
             <div className="space-y-2">
               <h3 className="text-lg font-semibold">Quick Links</h3>
               <ul className="space-y-1 text-sm text-muted-foreground">
-                <li><Link href="#" className="hover:underline">Emergency Services</Link></li>
-                <li><Link href="#" className="hover:underline">Find a Doctor</Link></li>
-                <li><Link href="#" className="hover:underline">Health Resources</Link></li>
+                <li><Link href="#features" className="hover:underline">Platform Features</Link></li>
+                <li><Link href="/login?role=doctor" className="hover:underline">Find a Doctor</Link></li>
+                <li><Link href="#translator" className="hover:underline">Health Resources</Link></li>
               </ul>
             </div>
              <div className="space-y-2">
@@ -228,7 +204,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="container mx-auto mt-8 border-t pt-4 text-center text-sm text-muted-foreground">
-            <p>© 2024 AyuLink Portal. All rights reserved.</p>
+            <p>© 2024 AyuLink. All rights reserved.</p>
           </div>
       </footer>
     </div>
