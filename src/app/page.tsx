@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { ArrowRight, BookOpen, Calendar, FileText, HeartPulse, Mail, Phone, MapPin, ShieldCheck, Stethoscope, User, Users, Workflow, Heart, File, Hospital, LifeBuoy } from "lucide-react";
+import { ArrowRight, BookOpen, Calendar, FileText, HeartPulse, Mail, Phone, MapPin, ShieldCheck, Stethoscope, User, Users, Workflow, Heart, File, Hospital, LifeBuoy, Menu } from "lucide-react";
 import { Logo } from "@/components/icons/logo";
 
 export default function LandingPage() {
@@ -14,9 +14,12 @@ export default function LandingPage() {
              <Logo className="size-9 text-primary" />
             <span className="text-2xl font-bold">AyuLink</span>
         </Link>
-        <div className="flex items-center gap-3">
-            <Phone className="size-5 text-muted-foreground" />
-            <span className="text-lg font-medium text-muted-foreground">+91 98765 43210</span>
+        <div className="flex items-center gap-4">
+            <Phone className="size-6 text-muted-foreground" />
+            <Button variant="ghost" size="icon" className="md:hidden">
+              <Menu className="size-6" />
+              <span className="sr-only">Toggle menu</span>
+            </Button>
         </div>
       </header>
 
@@ -112,7 +115,7 @@ export default function LandingPage() {
                         Our powerful AI-driven search tool helps you find and translate diagnosis codes seamlessly.
                       </p>
                       <Button asChild>
-                          <Link href="/search">
+                          <Link href="/search?role=doctor">
                             Go to Diagnosis Search <ArrowRight className="ml-2" />
                           </Link>
                       </Button>
