@@ -1,181 +1,105 @@
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { ArrowRight, BookOpen, Calendar, FileText, HeartPulse, Mail, Phone, MapPin, ShieldCheck, Stethoscope, User, Users, Workflow, Heart, File, Hospital, LifeBuoy, Menu } from "lucide-react";
+import { ArrowRight, BookOpen, Calendar, ChevronLeft, ChevronRight, FileText, HeartPulse, LifeBuoy, Mail, MapPin, Phone, ShieldCheck, Stethoscope, Users, Workflow } from "lucide-react";
 import { Logo } from "@/components/icons/logo";
+import Image from "next/image";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 export default function LandingPage() {
+  const landingImage = PlaceHolderImages.find(p => p.id === "landing-hero");
+
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
       <header className="container mx-auto flex items-center justify-between h-20 px-4 md:px-6">
         <Link href="#" className="flex items-center gap-3">
-             <Logo className="size-9 text-primary" />
-            <span className="text-2xl font-bold">AyuLink</span>
+          <Logo className="size-9 text-primary" />
+          <span className="text-2xl font-bold">AyuLink</span>
         </Link>
-        <div className="flex items-center gap-4">
-            <Phone className="size-6 text-muted-foreground" />
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="size-6" />
-              <span className="sr-only">Toggle menu</span>
+        <nav className="hidden md:flex gap-6 items-center">
+          <Link href="#" className="text-sm font-medium hover:underline underline-offset-4">Home</Link>
+          <Link href="#features" className="text-sm font-medium hover:underline underline-offset-4">Features</Link>
+          <Link href="#contact" className="text-sm font-medium hover:underline underline-offset-4">Contact</Link>
+           <Button asChild>
+              <Link href="/login?role=doctor">Login</Link>
             </Button>
-        </div>
+        </nav>
+        <Button variant="ghost" size="icon" className="md:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          <span className="sr-only">Toggle menu</span>
+        </Button>
       </header>
 
       <main className="flex-1">
-        <section className="w-full py-16 md:py-24 lg:py-32 bg-gradient-to-r from-blue-500 to-cyan-400 text-white">
+        <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-6 text-center">
-              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-                Bridging Traditional and Modern Medicine
-              </h1>
-              <p className="max-w-[700px] text-lg md:text-xl">
-                Streamlined access for patients, doctors, and healthcare professionals.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                  <Button size="lg" variant="secondary" className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm border border-white/30" asChild>
-                      <Link href="#features"><Hospital className="mr-2" /> Emergency Services</Link>
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 xl:gap-16">
+              <div className="flex flex-col justify-center space-y-6">
+                <p className="text-primary font-semibold">AyuLink Platform</p>
+                <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
+                  Bridging Traditional & Modern Medicine
+                </h1>
+                <p className="max-w-[600px] text-muted-foreground md:text-xl">
+                  Our platform provides seamless integration between NAMASTE and ICD-11 coding systems, empowering healthcare professionals with a unified solution for diagnosis and reporting.
+                </p>
+                <div className="flex flex-col gap-4 sm:flex-row">
+                  <Button size="lg" asChild>
+                    <Link href="/login?role=doctor">Login as Doctor</Link>
                   </Button>
-                  <Button size="lg" variant="secondary" className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm border border-white/30" asChild>
-                     <Link href="/login?role=patient"><File className="mr-2" /> Health Records</Link>
+                  <Button size="lg" variant="outline" asChild>
+                    <Link href="/login?role=patient">Login as Patient</Link>
                   </Button>
+                </div>
+              </div>
+              <div className="flex items-center justify-center">
+                {landingImage && (
+                  <Image
+                    src={landingImage.imageUrl}
+                    alt={landingImage.description}
+                    width={600}
+                    height={400}
+                    className="object-contain"
+                    data-ai-hint={landingImage.imageHint}
+                  />
+                )}
               </div>
             </div>
           </div>
         </section>
 
-        <section id="access" className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-                Choose Your Portal
-              </h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed">
-                Select the appropriate interface for your role to get started.
+        <section id="features" className="w-full bg-blue-500 text-white">
+          <div className="container relative grid grid-cols-1 md:grid-cols-3 gap-0 px-4 md:px-6">
+            <div className="bg-muted text-foreground p-8 rounded-t-lg md:rounded-l-lg md:rounded-tr-none">
+              <h3 className="text-2xl font-bold mb-2">Step 1: Search</h3>
+              <p className="text-muted-foreground">
+                Utilize our AI-powered intelligent search to find diagnosis codes from both NAMASTE and ICD-11 systems instantly.
               </p>
             </div>
-            <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 py-12 sm:grid-cols-2">
-              <Card className="text-center hover:shadow-strong transition-shadow">
-                <CardHeader>
-                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-green-100">
-                    <User className="h-8 w-8 text-green-600" />
-                  </div>
-                  <CardTitle className="mt-4">Patient Portal</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    Access your medical records, appointments, and health information.
-                  </p>
-                  <Button className="mt-6 w-full bg-green-500 hover:bg-green-600 text-white" asChild>
-                    <Link href="/login?role=patient">Login as Patient</Link>
-                  </Button>
-                </CardContent>
-              </Card>
-              <Card className="text-center hover:shadow-strong transition-shadow">
-                <CardHeader>
-                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-cyan-100">
-                    <Stethoscope className="h-8 w-8 text-cyan-600" />
-                  </div>
-                  <CardTitle className="mt-4">Doctor Portal</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    Manage patients, access medical records, and clinical tools.
-                  </p>
-                  <Button className="mt-6 w-full bg-cyan-500 hover:bg-cyan-600 text-white" asChild>
-                     <Link href="/login?role=doctor">Login as Doctor</Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        <section id="translator" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-                Medical Code Translator
-              </h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed">
-                Convert between Namaste and ICD-11 codes instantly.
+            <div className="p-8">
+              <h3 className="text-2xl font-bold mb-2">Step 2: Integrate</h3>
+              <p>
+                Seamlessly integrate dual-coded data into electronic medical records, ensuring comprehensive patient files.
               </p>
             </div>
-            <div className="mx-auto max-w-2xl py-12">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Workflow className="h-5 w-5" /> Code Translation Tool
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-center">
-                     <p className="text-muted-foreground mb-4">
-                        Our powerful AI-driven search tool helps you find and translate diagnosis codes seamlessly.
-                      </p>
-                      <Button asChild>
-                          <Link href="/search?role=doctor">
-                            Go to Diagnosis Search <ArrowRight className="ml-2" />
-                          </Link>
-                      </Button>
-                  </div>
-                </CardContent>
-              </Card>
+            <div className="p-8">
+              <h3 className="text-2xl font-bold mb-2">Step 3: Report</h3>
+              <p>
+                Generate compliant morbidity reports for the Ministry of Ayush with just a few clicks, saving time and reducing errors.
+              </p>
             </div>
           </div>
-        </section>
-
-        <section id="features" className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-                Platform Features
-              </h2>
+           <div className="container px-4 md:px-6 pb-8 flex justify-end gap-2">
+                <Button variant="outline" size="icon" className="bg-transparent text-white border-white/50 hover:bg-white/10 hover:text-white">
+                    <ChevronLeft className="h-6 w-6" />
+                </Button>
+                 <Button variant="outline" size="icon" className="bg-transparent text-white border-white/50 hover:bg-white/10 hover:text-white">
+                    <ChevronRight className="h-6 w-6" />
+                </Button>
             </div>
-            <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 py-12 sm:grid-cols-2 lg:grid-cols-4">
-              <Card className="text-center">
-                <CardHeader>
-                  <Calendar className="mx-auto h-8 w-8 mb-2 text-primary" />
-                  <CardTitle>Appointment Scheduling</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">Easy online booking</p>
-                </CardContent>
-              </Card>
-              <Card className="text-center">
-                <CardHeader>
-                  <FileText className="mx-auto h-8 w-8 mb-2 text-primary" />
-                  <CardTitle>Digital Records</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">Secure health records</p>
-                </CardContent>
-              </Card>
-               <Card className="text-center">
-                <CardHeader>
-                  <ShieldCheck className="mx-auto h-8 w-8 mb-2 text-primary" />
-                  <CardTitle>HIPAA Compliant</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">Protected health data</p>
-                </CardContent>
-              </Card>
-               <Card className="text-center">
-                <CardHeader>
-                  <HeartPulse className="mx-auto h-8 w-8 mb-2 text-primary" />
-                  <CardTitle>Real-time Monitoring</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">Live health tracking</p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
         </section>
       </main>
 
-       <footer className="bg-muted py-8 md:py-12">
+       <footer id="contact" className="bg-muted py-8 md:py-12">
           <div className="container mx-auto grid grid-cols-1 gap-8 px-4 md:grid-cols-4 md:px-6">
             <div className="space-y-2">
               <h3 className="text-lg font-semibold">Contact Info</h3>
@@ -190,7 +114,7 @@ export default function LandingPage() {
               <ul className="space-y-1 text-sm text-muted-foreground">
                 <li><Link href="#features" className="hover:underline">Platform Features</Link></li>
                 <li><Link href="/login?role=doctor" className="hover:underline">Find a Doctor</Link></li>
-                <li><Link href="#translator" className="hover:underline">Health Resources</Link></li>
+                <li><Link href="/search?role=doctor" className="hover:underline">Health Resources</Link></li>
               </ul>
             </div>
              <div className="space-y-2">

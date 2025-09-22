@@ -9,9 +9,9 @@
     },
     {
       "id": "landing-hero",
-      "description": "A bright and modern medical laboratory with advanced equipment.",
-      "imageUrl": "https://picsum.photos/seed/medicallab/1200/800",
-      "imageHint": "medical lab"
+      "description": "An illustration of a doctor with medical items like a thermometer, pills, and a shield icon.",
+      "imageUrl": "https://picsum.photos/seed/doctorillustration/600/400",
+      "imageHint": "doctor illustration"
     },
     {
       "id": "feature-1",
