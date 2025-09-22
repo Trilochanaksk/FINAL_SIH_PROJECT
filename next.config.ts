@@ -30,6 +30,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  env: {
+    NAMASTE_API_KEY: process.env.NAMASTE_API_KEY,
+    WHO_CLIENT_ID: process.env.WHO_CLIENT_ID,
+    WHO_CLIENT_SECRET: process.env.WHO_CLIENT_SECRET,
+  },
 };
 
 export default nextConfig;
