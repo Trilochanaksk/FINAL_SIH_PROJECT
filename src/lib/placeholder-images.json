@@ -2,10 +2,10 @@
 {
   "placeholderImages": [
     {
-        "id": "login-hero",
-        "description": "A doctor in a modern, clean medical office looking at a tablet.",
-        "imageUrl": "https://picsum.photos/seed/med-login/1920/1080",
-        "imageHint": "doctor office"
+      "id": "login-hero",
+      "description": "A calm and professional medical environment with a doctor reviewing data on a screen.",
+      "imageUrl": "https://picsum.photos/seed/science/1920/1080",
+      "imageHint": "medical technology"
     }
   ]
 }

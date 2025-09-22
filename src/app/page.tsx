@@ -5,13 +5,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/icons/logo";
@@ -68,22 +61,22 @@ export default function LoginPage() {
 
   return (
     <div className="w-full min-h-screen lg:grid lg:grid-cols-2">
-      <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-[350px] gap-6">
-          <div className="grid gap-2 text-center">
-             <div className="flex justify-center items-center gap-2 mb-2">
-               <Logo className="size-8 text-primary" />
-                <h1 className="text-3xl font-bold tracking-tight">AyuLink</h1>
+      <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto grid w-[380px] gap-8">
+          <div className="grid gap-4 text-center">
+             <div className="flex justify-center items-center gap-3 mb-2">
+               <Logo className="size-9 text-primary" />
+                <h1 className="text-4xl font-bold tracking-tight">AyuLink</h1>
             </div>
-            <p className="text-balance text-muted-foreground">
-              Enter your credentials to access your account
+            <p className="text-balance text-muted-foreground text-lg">
+              Seamlessly connecting traditional and modern medicine.
             </p>
           </div>
-          <form onSubmit={handleLogin} className="grid gap-4">
+          <form onSubmit={handleLogin} className="grid gap-6">
              <div className="grid gap-2">
-                <Label htmlFor="role">Your Role</Label>
+                <Label htmlFor="role" className="text-base">Your Role</Label>
                  <Select value={role} onValueChange={handleRoleChange}>
-                    <SelectTrigger>
+                    <SelectTrigger className="text-base h-11">
                         <SelectValue placeholder="Select your role" />
                     </SelectTrigger>
                     <SelectContent>
@@ -93,7 +86,7 @@ export default function LoginPage() {
                 </Select>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-base">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -101,14 +94,15 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="h-11 text-base"
               />
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password"  className="text-base">Password</Label>
                 <a
                   href="#"
-                  className="ml-auto inline-block text-sm underline"
+                  className="ml-auto inline-block text-sm text-primary hover:underline"
                 >
                   Forgot your password?
                 </a>
@@ -119,25 +113,27 @@ export default function LoginPage() {
                 required 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                 className="h-11 text-base"
               />
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full h-12 text-lg font-semibold">
               Login
             </Button>
           </form>
         </div>
       </div>
-      <div className="hidden bg-muted lg:block">
+      <div className="hidden bg-muted lg:block relative">
         {loginImage && (
             <Image
             src={loginImage.imageUrl}
             alt={loginImage.description}
-            width="1920"
-            height="1080"
-            className="h-full w-full object-cover dark:brightness-[0.3] dark:grayscale"
+            fill
+            className="object-cover"
             data-ai-hint={loginImage.imageHint}
+            priority
             />
         )}
+        <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent"></div>
       </div>
     </div>
   );
