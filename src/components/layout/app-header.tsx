@@ -45,6 +45,8 @@ export default function AppHeader() {
         return "Diagnosis Search";
       case "/reporting":
         return "Reporting";
+      case "/upload":
+        return "Upload Report";
        case "/settings":
         return "Settings";
       default:
