@@ -16,7 +16,7 @@ export default function LandingPage() {
         </Link>
         <div className="flex items-center gap-3">
             <Phone className="size-5 text-muted-foreground" />
-            <span className="text-lg font-medium text-muted-foreground">+1 (555) 123-4567</span>
+            <span className="text-lg font-medium text-muted-foreground">+91 98765 43210</span>
         </div>
       </header>
 
@@ -177,7 +177,7 @@ export default function LandingPage() {
             <div className="space-y-2">
               <h3 className="text-lg font-semibold">Contact Info</h3>
               <ul className="space-y-1 text-sm text-muted-foreground">
-                <li className="flex items-center gap-2"><Phone className="h-4 w-4" /> +1 (555) 123-4567</li>
+                <li className="flex items-center gap-2"><Phone className="h-4 w-4" /> +91 98765 43210</li>
                 <li className="flex items-center gap-2"><Mail className="h-4 w-4" /> info@ayulink.com</li>
                 <li className="flex items-center gap-2"><MapPin className="h-4 w-4" /> 123 Medical Center Dr</li>
               </ul>
