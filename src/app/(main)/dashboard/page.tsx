@@ -20,5 +20,12 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
     return <PatientDashboard files={patientFiles} />;
   }
   
-  return <DoctorDashboard />;
+  const files = samplePatientFiles.filter(
+    (file) =>
+      file.id.toLowerCase().includes("".toLowerCase()) ||
+      file.patientName.toLowerCase().includes("".toLowerCase())
+  );
+  await new Promise(resolve => setTimeout(resolve, 500));
+
+  return <DoctorDashboard files={files} />;
 }

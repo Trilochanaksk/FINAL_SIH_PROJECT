@@ -26,7 +26,8 @@ import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Legend, ResponsiveContainer
 import type { ChartConfig } from "@/components/ui/chart";
 import { Badge } from "@/components/ui/badge";
 import { Activity, FileText, Users, Syringe } from 'lucide-react';
-import PatientFilesWrapper, { PatientFilesSkeleton } from '@/components/patients/patient-files-wrapper';
+import type { PatientFile } from '@/lib/patient-data';
+import PatientFiles from '@/components/patients/patient-files';
 
 
 const chartData = [
@@ -96,7 +97,7 @@ const recentDiagnoses = [
   },
 ];
 
-export default function DoctorDashboard() {
+export default function DoctorDashboard({ files }: { files: PatientFile[] }) {
     return (
         <div className="flex flex-col gap-8">
             <h1 className="text-3xl font-bold tracking-tight">Doctor Dashboard</h1>
@@ -239,9 +240,7 @@ export default function DoctorDashboard() {
                     <CardDescription>Recently accessed patient files.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <Suspense fallback={<PatientFilesSkeleton />}>
-                        <PatientFilesWrapper query="" />
-                    </Suspense>
+                    <PatientFiles files={files} query="" />
                 </CardContent>
             </Card>
         </div>
