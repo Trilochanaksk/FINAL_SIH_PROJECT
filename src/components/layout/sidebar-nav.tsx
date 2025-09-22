@@ -1,7 +1,8 @@
+
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -9,7 +10,7 @@ import {
 } from "@/components/ui/sidebar";
 import { LayoutDashboard, Users, FileText, Search, Settings } from "lucide-react";
 
-const menuItems = [
+const doctorMenuItems = [
   {
     href: "/dashboard",
     icon: LayoutDashboard,
@@ -25,7 +26,7 @@ const menuItems = [
     icon: FileText,
     label: "Reporting",
   },
-    {
+  {
     href: "/search",
     icon: Search,
     label: "Diagnosis Search",
@@ -37,19 +38,35 @@ const menuItems = [
   }
 ];
 
-export function SidebarNav() {
+const patientMenuItems = [
+  {
+    href: "/dashboard",
+    icon: LayoutDashboard,
+    label: "My Dashboard",
+  },
+   {
+    href: "/settings",
+    icon: Settings,
+    label: "My Settings",
+  }
+];
+
+export function DoctorSidebarNav() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const role = searchParams.get('role') || 'doctor';
+
 
   return (
     <SidebarMenu>
-      {menuItems.map((item) => (
+      {doctorMenuItems.map((item) => (
         <SidebarMenuItem key={item.href}>
           <SidebarMenuButton
             asChild
-            isActive={pathname.startsWith(item.href)}
+            isActive={pathname === item.href}
             tooltip={item.label}
           >
-            <Link href={item.href}>
+            <Link href={`${item.href}?role=${role}`}>
               <item.icon />
               <span>{item.label}</span>
             </Link>
@@ -59,3 +76,31 @@ export function SidebarNav() {
     </SidebarMenu>
   );
 }
+
+export function PatientSidebarNav() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const role = searchParams.get('role') || 'patient';
+
+  return (
+    <SidebarMenu>
+      {patientMenuItems.map((item) => (
+        <SidebarMenuItem key={item.href}>
+          <SidebarMenuButton
+            asChild
+            isActive={pathname === item.href}
+            tooltip={item.label}
+          >
+            <Link href={`${item.href}?role=${role}`}>
+              <item.icon />
+              <span>{item.label}</span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      ))}
+    </SidebarMenu>
+  );
+}
+
+// Default export can be one of them or a combined component if needed
+export const SidebarNav = DoctorSidebarNav;

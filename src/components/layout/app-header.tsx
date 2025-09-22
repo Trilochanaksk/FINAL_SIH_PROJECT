@@ -13,7 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { LogOut, Settings, User } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -21,16 +21,19 @@ import { cn } from "@/lib/utils";
 export default function AppHeader() {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const role = searchParams.get('role') || 'doctor';
+
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 0);
+      setScrolled(window.scrollY > 5);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
+  
   const getPageTitle = () => {
     if (pathname.startsWith("/patients")) {
       return "Patient Records";
@@ -50,14 +53,17 @@ export default function AppHeader() {
   };
 
   const handleLogout = () => {
-    // In a real app, you'd clear the session/token here
     router.push('/'); 
   }
+  
+  const userName = role === 'doctor' ? 'Dr. Anya Sharma' : 'John Doe';
+  const userEmail = role === 'doctor' ? 'doctor.anya@ayulink.com' : 'patient.john@ayulink.com';
+  const avatarSeed = role === 'doctor' ? 'doc-avatar' : 'patient-avatar';
 
   return (
     <header className={cn(
-      "sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-xl sm:px-6 transition-all",
-      scrolled && "bg-background"
+      "sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-xl sm:px-6 transition-shadow",
+      scrolled && "shadow-md"
     )}>
       <div className="md:hidden">
         <SidebarTrigger />
@@ -71,12 +77,12 @@ export default function AppHeader() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-9 w-9 rounded-full">
-              <Avatar className="h-9 w-9">
+              <Avatar className="h-9 w-9 border">
                 <AvatarImage
-                  src="https://picsum.photos/seed/user-avatar/100/100"
+                  src={`https://picsum.photos/seed/${avatarSeed}/100/100`}
                   alt="User Avatar"
                 />
-                <AvatarFallback>U</AvatarFallback>
+                <AvatarFallback>{userName.charAt(0)}</AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
@@ -84,22 +90,16 @@ export default function AppHeader() {
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
                 <p className="text-sm font-medium leading-none">
-                  Dr. Anya Sharma
+                  {userName}
                 </p>
                 <p className="text-xs leading-none text-muted-foreground">
-                  doctor.anya@ayulink.com
+                  {userEmail}
                 </p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href="/settings">
-                <User className="mr-2 h-4 w-4" />
-                <span>Profile</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-               <Link href="/settings">
+              <Link href={`/settings?role=${role}`}>
                 <Settings className="mr-2 h-4 w-4" />
                 <span>Settings</span>
               </Link>

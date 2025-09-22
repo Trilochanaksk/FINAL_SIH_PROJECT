@@ -1,5 +1,11 @@
-import { z } from 'zod';
 
+import { z } from 'zod';
+import mockData from '@/lib/mock-data.json';
+
+// NOTE: This service is now using local mock data to avoid network issues.
+// The live API call logic is commented out but preserved for reference.
+
+/*
 let token: {
   access_token: string;
   expires_at: number;
@@ -14,8 +20,7 @@ async function getWhoAuthToken() {
   const whoClientSecret = process.env.WHO_CLIENT_SECRET;
 
   if (!whoClientId || !whoClientSecret) {
-    console.error("WHO client ID or secret is not configured in environment variables.");
-    // Fallback to offline mode
+    console.error("WHO client ID or secret is not configured in environment variables. Switching to offline mode.");
     return null;
   }
 
@@ -42,7 +47,7 @@ async function getWhoAuthToken() {
     const expires_in = data.expires_in || 3600;
     token = {
       access_token: data.access_token,
-      expires_at: Date.now() + (expires_in - 300) * 1000, // Refresh 5 mins before expiry
+      expires_at: Date.now() + (expires_in - 300) * 1000,
     };
     return token.access_token;
   } catch (error) {
@@ -50,6 +55,7 @@ async function getWhoAuthToken() {
     return null;
   }
 }
+*/
 
 export const WhoIcd11Record = z.object({
   icd11Code: z.string(),
@@ -58,44 +64,26 @@ export const WhoIcd11Record = z.object({
 export type WhoIcd11Record = z.infer<typeof WhoIcd11Record>;
 
 export async function searchWhoIcd11(query: string): Promise<WhoIcd11Record[]> {
-   const accessToken = await getWhoAuthToken();
-  if (!accessToken) {
-    console.log("Could not get WHO token. Returning empty results.");
-    return [];
-  }
+  console.log(`Searching mock WHO data for: "${query}"`);
 
-  const searchUrl = `https://id.who.int/icd/entity/search?q=${encodeURIComponent(query)}`;
+  // Simulate a network delay
+  await new Promise(resolve => setTimeout(resolve, 250));
 
-  try {
-    const response = await fetch(searchUrl, {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Accept-Language': 'en',
-        'API-Version': 'v2',
-        'Accept': 'application/json',
-      },
-      cache: 'no-store',
-    });
+  const results = mockData.filter((item: any) => {
+    const description = item.description || "";
+    const icd11Code = item.icd11Code || "";
+    const queryLower = query.toLowerCase();
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error(`Failed to fetch from WHO API: ${response.status} ${errorText}`);
-      return [];
-    }
+    return description.toLowerCase().includes(queryLower) || icd11Code.toLowerCase().includes(queryLower);
+  });
+  
+  const mappedResults = results.map((item: any) => ({
+    icd11Code: item.icd11Code || 'N/A',
+    description: item.description,
+  })).filter(item => item.icd11Code !== 'N/A');
 
-    const data = await response.json();
-
-    if (data.destinationEntities && data.destinationEntities.length > 0) {
-      return data.destinationEntities.map((entity: any) => ({
-        // The code is often in the ID URI, need to parse it
-        icd11Code: entity.id.split('/').pop() || 'N/A',
-        description: entity.title.replace(/<[^>]*>/g, ''), // Strip HTML tags from title
-      }));
-    }
-
-    return [];
-  } catch (err: any) {
-    console.error("WHO API fetch failed:", err);
-    return [];
-  }
+  // Remove duplicates
+  const uniqueResults = Array.from(new Map(mappedResults.map(item => [item.icd11Code, item])).values());
+  
+  return uniqueResults;
 }
