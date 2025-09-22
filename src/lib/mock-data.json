@@ -1,0 +1,33 @@
+
+[
+  {
+    "namasteCode": "NAM-AY-123",
+    "icd11Code": "M65",
+    "description": "Amavata (Rheumatoid Arthritis)",
+    "system": "Ayurveda"
+  },
+  {
+    "namasteCode": "NAM-SI-456",
+    "icd11Code": "M05",
+    "description": "Vali Azhal Keel Vayu",
+    "system": "Siddha"
+  },
+  {
+    "namasteCode": "NAM-UN-789",
+    "icd11Code": "M15",
+    "description": "Waja-ul-Mafasil (Polyarthritis)",
+    "system": "Unani"
+  },
+  {
+    "namasteCode": "NAM-AY-101",
+    "icd11Code": "M54.3",
+    "description": "Gridhrasi (Sciatica)",
+    "system": "Ayurveda"
+  },
+  {
+    "namasteCode": "NAM-UN-112",
+    "icd11Code": "J00",
+    "description": "Nazla (Common Cold)",
+    "system": "Unani"
+  }
+]
