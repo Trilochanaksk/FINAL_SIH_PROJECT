@@ -59,19 +59,19 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl items-start gap-12 py-12 lg:grid-cols-3">
-              <div className="grid gap-4 text-center medical-card animate-fadeIn" style={{ animationDelay: '0.2s' }}>
+              <div className="grid gap-4 text-center medical-card fade-in" style={{ animationDelay: '0.2s' }}>
                 <h3 className="text-2xl font-bold">Dual-Code Conversion</h3>
                 <p className="text-muted-foreground">
                   Instantly convert diagnoses between NAMASTE and ICD-11 with our AI-powered tool.
                 </p>
               </div>
-               <div className="grid gap-4 text-center medical-card animate-fadeIn" style={{ animationDelay: '0.4s' }}>
+               <div className="grid gap-4 text-center medical-card fade-in" style={{ animationDelay: '0.4s' }}>
                 <h3 className="text-2xl font-bold">Unified Patient Records</h3>
                 <p className="text-muted-foreground">
                  Access comprehensive patient files with detailed reports, vitals, and notes.
                 </p>
               </div>
-               <div className="grid gap-4 text-center medical-card animate-fadeIn" style={{ animationDelay: '0.6s' }}>
+               <div className="grid gap-4 text-center medical-card fade-in" style={{ animationDelay: '0.6s' }}>
                 <h3 className="text-2xl font-bold">Ministry of Ayush Reporting</h3>
                 <p className="text-muted-foreground">
                   Generate real-time morbidity data reports for compliance with the Ministry of Ayush.
