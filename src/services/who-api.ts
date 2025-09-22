@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import mockData from '@/lib/mock-data.json';
 
 export const WhoIcd11Record = z.object({
   icd11Code: z.string(),
@@ -6,94 +7,34 @@ export const WhoIcd11Record = z.object({
 });
 export type WhoIcd11Record = z.infer<typeof WhoIcd11Record>;
 
-let authToken: { token: string; expires: number } | null = null;
-
-async function getWhoAuthToken(): Promise<string | null> {
-    if (authToken && authToken.expires > Date.now()) {
-        return authToken.token;
-    }
-
-    const clientId = process.env.WHO_CLIENT_ID;
-    const clientSecret = process.env.WHO_CLIENT_SECRET;
-
-    if (!clientId || !clientSecret) {
-        console.error('WHO_CLIENT_ID or WHO_CLIENT_SECRET environment variables not set.');
-        return null;
-    }
-
-    const tokenUrl = 'https://icd.who.int/connect/token';
-    const body = `client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials&scope=icdapi_access`;
-
-    try {
-        const response = await fetch(tokenUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: body,
-            cache: 'no-store',
-        });
-
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error(`Failed to get WHO auth token: ${response.status} ${response.statusText}`, errorText);
-            return null;
-        }
-
-        const data = await response.json();
-        authToken = {
-            token: data.access_token,
-            expires: Date.now() + (data.expires_in - 300) * 1000, // Refresh 5 minutes before expiry
-        };
-        return authToken.token;
-    } catch (error) {
-        console.error("Error fetching WHO auth token:", error);
-        return null;
-    }
-}
-
 export async function searchWhoIcd11(query: string): Promise<WhoIcd11Record[]> {
+  console.log(`Searching mock data for WHO ICD-11: "${query}"`);
   try {
-    const token = await getWhoAuthToken();
+    const results = mockData.filter((item: any) => {
+      const description = item.description || item.Long_definition || item.Short_definition || item.NUMC_TERM || "";
+      const icd11Code = item.icd11Code || "";
+      const queryLower = query.toLowerCase();
 
-    if (!token) {
-      console.log("Could not retrieve WHO auth token. Skipping WHO API search.");
-      return [];
-    }
-
-    const searchUrl = `https://id.who.int/icd/entity/search?q=${encodeURIComponent(query)}`;
-
-    const response = await fetch(searchUrl, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/json',
-        'Accept-Language': 'en',
-        'API-Version': 'v2',
-      },
-      cache: 'no-store',
+      // Search if the query matches the description or ICD-11 code
+      return (
+        description.toLowerCase().includes(queryLower) ||
+        icd11Code.toLowerCase().includes(queryLower)
+      );
     });
 
-    if (!response.ok) {
-      console.error('Failed to fetch from WHO ICD-11 API', await response.text());
-      return [];
-    }
+    const mappedResults = results
+      .filter(item => item.icd11Code) // Only include items that have an icd11Code
+      .map((item: any) => ({
+        icd11Code: item.icd11Code,
+        description: item.description || item.Long_definition || item.Short_definition || item.NUMC_TERM,
+      }));
+    
+    // Deduplicate results based on icd11Code
+    const uniqueResults = Array.from(new Map(mappedResults.map(item => [item.icd11Code, item])).values());
 
-    const data = await response.json();
-
-    if (!data.destinationEntities || !Array.isArray(data.destinationEntities)) {
-        return [];
-    }
-
-    return data.destinationEntities.map((entity: any) => {
-        // Strip HTML tags from the title
-        const description = entity.title.replace(/<[^>]*>/g, '');
-        return {
-            icd11Code: entity.theCode || entity.id.split('/').pop(),
-            description: description,
-        }
-    });
+    return uniqueResults;
   } catch (error) {
-    console.error("An error occurred during WHO ICD-11 search:", error);
+    console.error("An error occurred during local WHO ICD-11 search:", error);
     return [];
   }
 }

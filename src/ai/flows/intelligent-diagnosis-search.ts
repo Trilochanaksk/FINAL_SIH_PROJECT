@@ -73,14 +73,14 @@ const prompt = ai.definePrompt({
   input: {schema: IntelligentDiagnosisSearchInputSchema},
   output: {schema: IntelligentDiagnosisSearchOutputSchema},
   tools: [namasteSearchTool, whoIcd11SearchTool],
-  prompt: `You are a medical diagnosis search assistant. Your task is to provide dual-code suggestions from both NAMASTE and ICD-11 TM2.
+  prompt: `You are a medical diagnosis search assistant. Your task is to provide dual-code suggestions from both NAMASTE and ICD-11 TM2 based on local data.
 
-  1. First, use the 'namasteSearchTool' to find traditional medicine diagnoses based on the user's query and filter.
-  2. For each NAMASTE result, use the 'whoIcd11SearchTool' with the same original query to find the most relevant ICD-11 code.
-  3. Correlate the results. For each NAMASTE diagnosis, find the best matching ICD-11 diagnosis.
-  4. If you find a good match, create a result object with the NAMASTE code, the corresponding ICD-11 code, and the NAMASTE description.
-  5. If no ICD-11 match is found for a NAMASTE result, use 'N/A' for the icd11Code.
-  6. Return a list of these correlated results. Prioritize creating pairs even if the match isn't perfect, to provide the user with options.
+  1. Use the 'namasteSearchTool' to find all matching traditional medicine diagnoses based on the user's query and optional filter.
+  2. For each NAMASTE result found, use the 'whoIcd11SearchTool' with the NAMASTE description to find the corresponding ICD-11 code.
+  3. Correlate the results. For each NAMASTE diagnosis, find the best matching ICD-11 diagnosis from the local data.
+  4. Create a result object with the NAMASTE code, the corresponding ICD-11 code, and the NAMASTE description.
+  5. If no ICD-11 match is found for a NAMASTE result in the local data, use 'N/A' for the icd11Code.
+  6. Return a list of these correlated results.
 
   User Query: {{{query}}}
   Filter: {{{filter}}}
