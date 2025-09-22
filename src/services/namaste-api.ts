@@ -13,6 +13,7 @@ export async function searchNamaste(query: string, filter?: 'Ayurveda' | 'Siddha
   // Always try to fetch from the live API first.
   if (apiKey) {
     const searchUrl = `https://api.namaste.gov.in/search?q=${encodeURIComponent(query)}${filter ? `&system=${filter}`: ''}`;
+    console.log(`Attempting to fetch NAMASTE data from: ${searchUrl}`);
 
     try {
       const response = await fetch(searchUrl, {
@@ -23,6 +24,7 @@ export async function searchNamaste(query: string, filter?: 'Ayurveda' | 'Siddha
       });
 
       if (response.ok) {
+        console.log("Successfully fetched data from NAMASTE API.");
         const data = await response.json();
         const parsedData = z.array(NamasteRecord).safeParse(data);
 
@@ -32,10 +34,14 @@ export async function searchNamaste(query: string, filter?: 'Ayurveda' | 'Siddha
           console.error("Failed to parse NAMASTE API response:", parsedData.error);
         }
       } else {
-        console.error('Failed to fetch from NAMASTE API:', response.status, await response.text());
+        console.error('Failed to fetch from NAMASTE API. Status:', response.status, 'Response:', await response.text());
       }
-    } catch (error) {
-      console.error("Error calling NAMASTE API:", error);
+    } catch (error: any) {
+      console.error("An error occurred during the fetch operation to the NAMASTE API.", {
+        message: error.message,
+        cause: error.cause, // This often contains more detailed network-level error info
+        stack: error.stack,
+      });
       // Fall through to mock data if the API call fails
     }
   }
