@@ -15,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowRightLeft, Loader2 } from "lucide-react";
 import { intelligentDiagnosisSearch } from "@/ai/flows/intelligent-diagnosis-search";
 import { useToast } from "@/hooks/use-toast";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type ConvertedDiagnosis = {
   namasteCode: string;
