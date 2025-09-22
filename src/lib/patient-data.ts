@@ -53,10 +53,10 @@ export const samplePatientFiles: PatientFile[] = [
       respiratoryRate: "16 breaths/min",
     },
     diagnoses: [
-      { code: "NAM-AY-101", description: "Gridhrasi (Sciatica)" },
+      { code: "NAM-AY-123", description: "Amavata (Rheumatoid Arthritis)" },
     ],
     notes:
-      "Symptoms are consistent with Gridhrasi. Recommended herbal formulations, specific yoga asanas, and lifestyle modifications. Advised to avoid heavy lifting.",
+      "Symptoms are consistent with Amavata. Recommended herbal formulations, specific yoga asanas, and lifestyle modifications. Advised to avoid heavy lifting.",
   },
   {
     id: "PAT-003",
@@ -72,7 +72,7 @@ export const samplePatientFiles: PatientFile[] = [
       respiratoryRate: "16 breaths/min",
     },
     diagnoses: [
-        { code: "NAM-UN-112", description: "Nazla (Common Cold)" }
+        { code: "NAM-UN-789", description: "Waja-ul-Mafasil (Polyarthritis)" }
     ],
     notes: "Patient reports high susceptibility to catching colds. Advised steam inhalation, herbal decoctions, and dietary adjustments to boost immunity.",
   },
