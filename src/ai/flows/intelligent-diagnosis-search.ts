@@ -9,8 +9,8 @@
  */
 
 import { z } from 'genkit';
-import { searchNamaste, NamasteRecord } from '@/services/namaste-api';
-import { searchWhoIcd11, WhoIcd11Record } from '@/services/who-api';
+import { searchNamaste } from '@/services/namaste-api';
+import { searchWhoIcd11 } from '@/services/who-api';
 
 const IntelligentDiagnosisSearchInputSchema = z.object({
   query: z.string().describe('The diagnosis search query.'),
@@ -33,8 +33,8 @@ const IntelligentDiagnosisSearchOutputSchema = z.object({
 export type IntelligentDiagnosisSearchOutput = z.infer<typeof IntelligentDiagnosisSearchOutputSchema>;
 
 /**
- * Performs a local search and correlation between NAMASTE and ICD-11 data
- * without making an expensive LLM call.
+ * Performs a local search for NAMASTE data and a live API search for ICD-11 data,
+ * then correlates them.
  */
 export async function intelligentDiagnosisSearch(
   input: IntelligentDiagnosisSearchInput
@@ -48,23 +48,23 @@ export async function intelligentDiagnosisSearch(
     return { results: [] };
   }
 
-  // 2. For each NAMASTE result, find the corresponding ICD-11 code from local data.
-  const correlatedResults = await Promise.all(
-    namasteResults.map(async (namasteRecord) => {
-      // Use the description from the NAMASTE record to find a matching ICD-11 record.
-      const whoResults = await searchWhoIcd11(namasteRecord.description);
+  // 2. For each NAMASTE result, find the corresponding ICD-11 code from the live WHO API.
+  const correlatedResultsPromises = namasteResults.map(async (namasteRecord) => {
+    // Use the description from the NAMASTE record to find a matching ICD-11 record.
+    const whoResults = await searchWhoIcd11(namasteRecord.description);
 
-      // Find the best match (or first match) from the WHO results.
-      const icd11Code = whoResults.length > 0 ? whoResults[0].icd11Code : 'N/A';
+    // Find the best match (or first match) from the WHO results.
+    const icd11Code = whoResults.length > 0 ? whoResults[0].icd11Code : 'N/A';
 
-      return {
-        namasteCode: namasteRecord.namasteCode || 'N/A',
-        icd11Code: icd11Code,
-        description: namasteRecord.description,
-      };
-    })
-  );
+    return {
+      namasteCode: namasteRecord.namasteCode || 'N/A',
+      icd11Code: icd11Code,
+      description: namasteRecord.description,
+    };
+  });
   
+  const correlatedResults = await Promise.all(correlatedResultsPromises);
+
   // Remove duplicates that might arise from the search.
   const uniqueResults = Array.from(new Map(correlatedResults.map(item => [item.namasteCode + item.icd11Code, item])).values());
 

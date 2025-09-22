@@ -22,23 +22,30 @@ export async function searchNamaste(query: string, filter?: 'Ayurveda' | 'Siddha
 
     const queryLower = query.toLowerCase();
 
-    return (
-      description.toLowerCase().includes(queryLower) ||
-      arabicTerm.toLowerCase().includes(queryLower) ||
-      numcCode.toLowerCase().includes(queryLower) ||
-      namasteCode.toLowerCase().includes(queryLower)
-    );
+    // Prioritize exact matches or whole word matches if possible
+    const searchTerms = [description, arabicTerm, numcCode, namasteCode].map(t => t.toLowerCase());
+    return searchTerms.some(term => term.includes(queryLower));
   });
 
   const mappedResults = results.map((item: any) => ({
     namasteCode: item.namasteCode || item.NUMC_CODE,
     description: item.description || item.Long_definition || item.Short_definition || item.NUMC_TERM,
-    system: item.system || 'Unspecified',
+    system: item.system || (item.NUMC_CODE?.startsWith('UM-') ? 'Unani' : 'Unspecified'),
   }));
 
+  let finalResults = mappedResults;
+
   if (filter) {
-    return mappedResults.filter(item => item.system === filter);
+    finalResults = mappedResults.filter(item => {
+        if (filter === 'Unani' && item.system === 'Unspecified' && item.namasteCode?.startsWith('UM-')) {
+            return true;
+        }
+        return item.system === filter;
+    });
   }
 
-  return mappedResults;
+  // Remove duplicates
+  const uniqueResults = Array.from(new Map(finalResults.map(item => [item.namasteCode, item])).values());
+
+  return uniqueResults;
 }
