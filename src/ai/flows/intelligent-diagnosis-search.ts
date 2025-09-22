@@ -48,13 +48,13 @@ export async function intelligentDiagnosisSearch(
     return { results: [] };
   }
 
-  // 2. For each NAMASTE result, find the corresponding ICD-11 code from the live WHO API.
+  // 2. For each NAMASTE result, find the corresponding ICD-11 code from the local mock data.
   const correlatedResultsPromises = namasteResults.map(async (namasteRecord) => {
     // Use the description from the NAMASTE record to find a matching ICD-11 record.
     const whoResults = await searchWhoIcd11(namasteRecord.description);
 
     // Find the best match (or first match) from the WHO results.
-    const icd11Code = whoResults.length > 0 ? whoResults[0].icd11Code : 'N/A';
+    const icd11Code = namasteRecord.icd11Code || (whoResults.length > 0 ? whoResults[0].icd11Code : 'N/A');
 
     return {
       namasteCode: namasteRecord.namasteCode || 'N/A',
