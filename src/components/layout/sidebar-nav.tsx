@@ -62,7 +62,7 @@ const patientMenuItems = [
    {
     href: "/settings",
     icon: Settings,
-    label: "My Settings",
+    label: "Settings",
   }
 ];
 

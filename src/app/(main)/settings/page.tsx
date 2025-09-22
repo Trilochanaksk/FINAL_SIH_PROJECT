@@ -4,7 +4,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -24,10 +24,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const profileFormSchema = z.object({
   name: z.string().min(2, {
@@ -209,17 +209,29 @@ export default function SettingsPage() {
       language: "en-us",
     },
   });
-  
-  function onAppearanceSubmit(data: AppearanceFormValues) {
-    toast({
-      title: "Appearance Settings Saved",
-      description: "Your appearance preferences have been saved.",
-    });
-     if (data.darkMode) {
+
+  useEffect(() => {
+    const isDarkMode = localStorage.getItem('theme') === 'dark';
+    appearanceForm.setValue('darkMode', isDarkMode);
+    if (isDarkMode) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
+  }, [appearanceForm]);
+  
+  function onAppearanceSubmit(data: AppearanceFormValues) {
+    if (data.darkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+    toast({
+      title: "Appearance Settings Saved",
+      description: "Your appearance preferences have been saved.",
+    });
   }
 
 
