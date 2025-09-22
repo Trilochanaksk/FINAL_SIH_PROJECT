@@ -1,79 +1,117 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { ArrowRight, BookOpen, Calendar, FileText, HeartPulse, Mail, Phone, MapPin, ShieldCheck, Stethoscope, User, Users, Workflow } from "lucide-react";
+import { ArrowRight, BookOpen, Calendar, FileText, HeartPulse, Mail, Phone, MapPin, ShieldCheck, Stethoscope, User, Users, Workflow, Heart, File, Hospital, LifeBuoy } from "lucide-react";
+import { Logo } from "@/components/icons/logo";
 
 export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
+      <header className="container mx-auto flex items-center justify-between h-20 px-4 md:px-6">
+        <Link href="#" className="flex items-center gap-3">
+            <div className="p-2.5 bg-blue-600 rounded-lg">
+                <Heart className="size-6 text-white" />
+            </div>
+            <span className="text-2xl font-bold">AyuLink Portal</span>
+        </Link>
+        <div className="flex items-center gap-3">
+            <Phone className="size-5 text-muted-foreground" />
+            <span className="text-lg font-medium text-muted-foreground">+1 (555) 123-4567</span>
+        </div>
+      </header>
+
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        <section className="w-full py-16 md:py-24 lg:py-32 bg-gradient-to-r from-blue-500 to-cyan-400 text-white">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center space-y-6 text-center">
+              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
+                Advanced Healthcare Management System
+              </h1>
+              <p className="max-w-[700px] text-lg md:text-xl">
+                Streamlined access for patients, doctors, and healthcare professionals
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                  <Button size="lg" variant="secondary" className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm border border-white/30">
+                      <Hospital className="mr-2" /> Emergency Services
+                  </Button>
+                  <Button size="lg" variant="secondary" className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm border border-white/30">
+                     <File className="mr-2" /> Health Records
+                  </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="access" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+                Choose Your Access Level
+              </h2>
+              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed">
                 Select the appropriate interface for your role
-              </h1>
+              </p>
             </div>
-            <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 py-12 sm:grid-cols-2 lg:grid-cols-3">
-              <Card className="text-center">
+            <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3">
+              <Card className="text-center hover:shadow-strong transition-shadow">
                 <CardHeader>
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                    <User className="h-6 w-6 text-green-600" />
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-green-100">
+                    <User className="h-8 w-8 text-green-600" />
                   </div>
-                  <CardTitle>Patient Portal</CardTitle>
+                  <CardTitle className="mt-4">Patient Portal</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Access your medical records, appointments, and health information
+                    Access your medical records, appointments, and health information.
                   </p>
-                  <Button className="mt-4 bg-green-500 hover:bg-green-600 text-white" asChild>
+                  <Button className="mt-6 w-full bg-green-500 hover:bg-green-600 text-white" asChild>
                     <Link href="/login?role=patient">Login as Patient</Link>
                   </Button>
                 </CardContent>
               </Card>
-              <Card className="text-center">
+              <Card className="text-center hover:shadow-strong transition-shadow">
                 <CardHeader>
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-cyan-100">
-                    <Stethoscope className="h-6 w-6 text-cyan-600" />
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-cyan-100">
+                    <Stethoscope className="h-8 w-8 text-cyan-600" />
                   </div>
-                  <CardTitle>Doctor Portal</CardTitle>
+                  <CardTitle className="mt-4">Doctor Portal</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Manage patients, access medical records, and clinical tools
+                    Manage patients, access medical records, and clinical tools.
                   </p>
-                  <Button className="mt-4 bg-cyan-500 hover:bg-cyan-600 text-white" asChild>
+                  <Button className="mt-6 w-full bg-cyan-500 hover:bg-cyan-600 text-white" asChild>
                      <Link href="/login?role=doctor">Login as Doctor</Link>
                   </Button>
                 </CardContent>
               </Card>
-              <Card className="text-center">
+              <Card className="text-center hover:shadow-strong transition-shadow">
                 <CardHeader>
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
-                    <Users className="h-6 w-6 text-blue-600" />
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-blue-100">
+                    <Users className="h-8 w-8 text-blue-600" />
                   </div>
-                  <CardTitle>General Access</CardTitle>
+                  <CardTitle className="mt-4">General Access</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Public health information, resources, and general inquiries
+                    Public health information, resources, and general inquiries.
                   </p>
-                  <Button className="mt-4">General Access</Button>
+                  <Button className="mt-6 w-full">General Access</Button>
                 </CardContent>
               </Card>
             </div>
           </div>
         </section>
 
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+        <section id="translator" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
                 Medical Code Translator
               </h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed">
                 Convert between Namaste and ICD codes
               </p>
             </div>
@@ -109,10 +147,10 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        <section id="features" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
                 Platform Features
               </h2>
             </div>
