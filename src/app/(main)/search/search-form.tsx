@@ -57,6 +57,7 @@ export default function SearchForm({
     const params = new URLSearchParams(window.location.search);
     params.set("query", values.query);
     router.push(`${pathname}?${params.toString()}`);
+    form.reset({ query: "" });
   }
 
   return (
@@ -77,6 +78,7 @@ export default function SearchForm({
                         <Input
                           placeholder="e.g., Amavata, fever, headache..."
                           className="pl-10"
+                          autoComplete="off"
                           {...field}
                         />
                       </FormControl>
