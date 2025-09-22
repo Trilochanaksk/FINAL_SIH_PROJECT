@@ -1,3 +1,4 @@
+
 export type PatientFile = {
   id: string;
   patientName: string;
@@ -25,19 +26,18 @@ export const samplePatientFiles: PatientFile[] = [
     dob: "1985-05-15",
     gender: "Male",
     reportType: "ICD-11",
-    chiefComplaint: "Persistent cough and shortness of breath for 2 weeks.",
+    chiefComplaint: "Severe joint pain, swelling, and stiffness, especially in the wrists and hands.",
     vitals: {
-      bloodPressure: "120/80 mmHg",
-      heartRate: "72 bpm",
-      temperature: "37.0°C",
+      bloodPressure: "130/85 mmHg",
+      heartRate: "80 bpm",
+      temperature: "37.2°C",
       respiratoryRate: "18 breaths/min",
     },
     diagnoses: [
-      { code: "JB44.0", description: "Chronic obstructive pulmonary disease" },
-      { code: "BA00.0", description: "Essential hypertension" },
+      { code: "M65", description: "Rheumatoid Arthritis" },
     ],
     notes:
-      "Patient is a long-term smoker. Prescribed bronchodilators and advised on smoking cessation. Follow-up in 4 weeks.",
+      "Patient reports that the pain is worse in the morning. Physical examination reveals inflammation in multiple joints. Suspected Amavata. Recommending further tests and a follow-up.",
   },
   {
     id: "PAT-002",
@@ -45,7 +45,7 @@ export const samplePatientFiles: PatientFile[] = [
     dob: "1992-11-20",
     gender: "Female",
     reportType: "Namaste",
-    chiefComplaint: "Joint pain and stiffness, particularly in the mornings.",
+    chiefComplaint: "Lower back pain radiating down the left leg.",
     vitals: {
       bloodPressure: "110/70 mmHg",
       heartRate: "68 bpm",
@@ -53,11 +53,10 @@ export const samplePatientFiles: PatientFile[] = [
       respiratoryRate: "16 breaths/min",
     },
     diagnoses: [
-      { code: "NAM-AY-123", description: "Amavata (Rheumatoid Arthritis)" },
       { code: "NAM-AY-101", description: "Gridhrasi (Sciatica)" },
     ],
     notes:
-      "Symptoms are consistent with Amavata. Recommended herbal formulations and dietary changes. Advised to practice gentle yoga.",
+      "Symptoms are consistent with Gridhrasi. Recommended herbal formulations, specific yoga asanas, and lifestyle modifications. Advised to avoid heavy lifting.",
   },
   {
     id: "PAT-003",
@@ -65,17 +64,17 @@ export const samplePatientFiles: PatientFile[] = [
     dob: "1978-01-30",
     gender: "Male",
     reportType: "Namaste",
-    chiefComplaint: "Recurrent headaches and feeling of pressure in the head.",
+    chiefComplaint: "Recurrent episodes of running nose, sneezing, and nasal congestion.",
     vitals: {
-      bloodPressure: "130/85 mmHg",
-      heartRate: "75 bpm",
-      temperature: "37.1°C",
-      respiratoryRate: "17 breaths/min",
+      bloodPressure: "125/80 mmHg",
+      heartRate: "72 bpm",
+      temperature: "37.0°C",
+      respiratoryRate: "16 breaths/min",
     },
     diagnoses: [
-        { code: "A-2.1", description: "Shaqīqa Ḥārra (Acute migraine)" }
+        { code: "NAM-UN-112", description: "Nazla (Common Cold)" }
     ],
-    notes: "Patient reports high stress levels from work. Pain is unilateral and throbbing. Advised Shirodhara therapy and stress management techniques.",
+    notes: "Patient reports high susceptibility to catching colds. Advised steam inhalation, herbal decoctions, and dietary adjustments to boost immunity.",
   },
    {
     id: "PAT-004",
@@ -83,16 +82,16 @@ export const samplePatientFiles: PatientFile[] = [
     dob: "2001-07-12",
     gender: "Female",
     reportType: "ICD-11",
-    chiefComplaint: "Acute abdominal pain in the lower right quadrant, nausea, and low-grade fever.",
+    chiefComplaint: "Painful, swollen joints with significant morning stiffness.",
     vitals: {
       bloodPressure: "115/75 mmHg",
-      heartRate: "95 bpm",
-      temperature: "38.2°C",
-      respiratoryRate: "20 breaths/min",
+      heartRate: "85 bpm",
+      temperature: "37.5°C",
+      respiratoryRate: "18 breaths/min",
     },
     diagnoses: [
-        { code: "DC70", description: "Acute appendicitis" }
+        { code: "M15", description: "Polyarthritis" }
     ],
-    notes: "Physical examination shows tenderness at McBurney's point. Blood tests show elevated white blood cell count. Referred for surgical consultation for appendectomy.",
+    notes: "Clinical presentation suggests Waja-ul-Mafasil. Patient has a family history of autoimmune disorders. Ordered blood tests to confirm diagnosis and will start on Unani treatment protocol.",
   },
 ];

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useTransition } from "react";
@@ -34,24 +35,34 @@ export default function PatientReportView({ report }: { report: PatientFile }) {
     setConvertedData(null);
     startTransition(async () => {
       try {
-        const promises = report.diagnoses.map((dx) =>
-          intelligentDiagnosisSearch({
+        const conversionPromises = report.diagnoses.map(async (dx) => {
+          const searchResult = await intelligentDiagnosisSearch({
             query: dx.description,
-            // You might add a filter here if the system is known
-          })
-        );
-        const results = await Promise.all(promises);
-        const allConverted = results.flatMap((res) => res.results);
-        
-        // Simple mapping for demonstration
-        const finalConverted = report.diagnoses.map(dx => {
-            const match = allConverted.find(c => c.description.toLowerCase().includes(dx.description.toLowerCase()));
+          });
+
+          // Find the best match from the results
+          const bestMatch = searchResult.results.find(
+            (res) =>
+              res.description.toLowerCase().includes(dx.description.toLowerCase()) ||
+              dx.description.toLowerCase().includes(res.description.toLowerCase())
+          );
+
+          if (report.reportType === 'Namaste') {
             return {
-                namasteCode: report.reportType === 'Namaste' ? dx.code : (match?.namasteCode || 'N/A'),
-                icd11Code: report.reportType === 'ICD-11' ? dx.code : (match?.icd11Code || 'N/A'),
-                description: dx.description,
-            }
+              namasteCode: dx.code,
+              description: dx.description,
+              icd11Code: bestMatch?.icd11Code || 'N/A',
+            };
+          } else { // ICD-11
+            return {
+              icd11Code: dx.code,
+              description: dx.description,
+              namasteCode: bestMatch?.namasteCode || 'N/A',
+            };
+          }
         });
+
+        const finalConverted = await Promise.all(conversionPromises);
 
         setConvertedData(finalConverted);
         toast({
