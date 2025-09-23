@@ -107,7 +107,7 @@ export default function DoctorDashboard({ files }: { files: PatientFile[] }) {
                         <CardTitle className="text-sm font-medium">
                         Total Patients
                         </CardTitle>
-                        <Users className="h-5 w-5 text-muted-foreground" />
+                        <Users className="h-5 w-5 text-primary" />
                     </CardHeader>
                     <CardContent>
                         <div className="text-4xl font-bold">573</div>
@@ -121,7 +121,7 @@ export default function DoctorDashboard({ files }: { files: PatientFile[] }) {
                         <CardTitle className="text-sm font-medium">
                         Diagnoses This Month
                         </CardTitle>
-                        <Syringe className="h-5 w-5 text-muted-foreground" />
+                        <Syringe className="h-5 w-5 text-secondary" />
                     </CardHeader>
                     <CardContent>
                         <div className="text-4xl font-bold">1,204</div>
@@ -133,7 +133,7 @@ export default function DoctorDashboard({ files }: { files: PatientFile[] }) {
                 <Card className="transition-all hover:shadow-lg hover:border-primary cursor-pointer">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">Reports Filed</CardTitle>
-                        <FileText className="h-5 w-5 text-muted-foreground" />
+                        <FileText className="h-5 w-5 text-accent" />
                     </CardHeader>
                     <CardContent>
                         <div className="text-4xl font-bold">892</div>
@@ -145,7 +145,7 @@ export default function DoctorDashboard({ files }: { files: PatientFile[] }) {
                 <Card className="transition-all hover:shadow-lg hover:border-primary cursor-pointer">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">System Activity</CardTitle>
-                        <Activity className="h-5 w-5 text-muted-foreground" />
+                        <Activity className="h-5 w-5 text-warning" />
                     </CardHeader>
                     <CardContent>
                         <div className="text-4xl font-bold">High</div>
