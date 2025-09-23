@@ -12,11 +12,13 @@ export const Logo = ({ className }: { className?: string }) => (
     className={cn("size-6", className)}
   >
     <title>AyuLink Logo</title>
-    <path d="M8 3a4 4 0 0 1 8 0" />
-    <path d="M8 3v3a4 4 0 0 0 4 4h0a4 4 0 0 0 4-4V3" />
-    <path d="M12 10v10" />
-    <circle cx="12" cy="20" r="2" />
-    <path d="M6 6 C 2 10, 2 18, 6 22"/>
-    <path d="M18 6 C 22 10, 22 18, 18 22"/>
+    <path d="M12 3v4" />
+    <path d="M12 17v4" />
+    <path d="M21 12h-4" />
+    <path d="M7 12H3" />
+    <path d="M17.65 6.35C16.2 4.9 14.2 4 12 4s-4.2.9-5.65 2.35" />
+    <path d="M6.35 17.65C7.8 19.1 9.8 20 12 20s4.2-.9 5.65-2.35" />
+    <path d="M17.65 17.65C19.1 16.2 20 14.2 20 12s-.9-4.2-2.35-5.65" />
+    <path d="M6.35 6.35C4.9 7.8 4 9.8 4 12s.9 4.2 2.35 5.65" />
   </svg>
 );
