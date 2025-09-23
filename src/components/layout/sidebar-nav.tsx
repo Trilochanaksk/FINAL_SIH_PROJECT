@@ -59,11 +59,6 @@ const patientMenuItems = [
     icon: LayoutDashboard,
     label: "My Dashboard",
   },
-  {
-    href: "/patient-upload",
-    icon: FileUp,
-    label: "Upload Report",
-  },
    {
     href: "/settings",
     icon: Settings,
