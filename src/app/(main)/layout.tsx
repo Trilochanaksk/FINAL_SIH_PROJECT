@@ -31,7 +31,7 @@ export default function MainLayout({
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader>
-          <Link href="/" className="flex items-center gap-2">
+          <Link href={`/?role=${role}`} className="flex items-center gap-2">
             <Logo className="size-8 text-primary" />
             <span className="text-xl font-semibold tracking-tight">AyuLink</span>
           </Link>

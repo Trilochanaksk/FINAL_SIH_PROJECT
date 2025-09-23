@@ -55,25 +55,30 @@ export default function ReportDisplay({ report }: ReportDisplayProps) {
     if (!input) return;
 
     setIsSaving(true);
-
+    
     const isDarkMode = document.documentElement.classList.contains('dark');
-
+    
     html2canvas(input, {
-        scale: 2,
+        scale: 2, // Higher scale for better quality
         useCORS: true,
         backgroundColor: isDarkMode ? '#020817' : '#FFFFFF',
         onclone: (document) => {
-            // Re-render charts on the cloned document to ensure they are captured
-            Array.from(document.querySelectorAll('.recharts-surface')).forEach(svg => {
-                svg.setAttribute('width', svg.parentElement?.style.width || '100%');
-                svg.setAttribute('height', svg.parentElement?.style.height || '100%');
+            // This is a crucial step for recharts to render correctly in the clone
+            const charts = document.querySelectorAll('.recharts-wrapper');
+            charts.forEach(chart => {
+                chart.style.display = 'block';
+                const container = chart.closest('.recharts-responsive-container');
+                if (container) {
+                    container.style.width = `${container.clientWidth}px`;
+                    container.style.height = `${container.clientHeight}px`;
+                }
             });
         }
     }).then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF({
             orientation: "portrait",
-            unit: "px",
+            unit: "pt", // Use points for better scaling
             format: "a4",
         });
 
@@ -81,24 +86,30 @@ export default function ReportDisplay({ report }: ReportDisplayProps) {
         const pdfHeight = pdf.internal.pageSize.getHeight();
         const canvasWidth = canvas.width;
         const canvasHeight = canvas.height;
-        const ratio = canvasWidth / canvasHeight;
-
-        let imgWidth = pdfWidth;
-        let imgHeight = pdfWidth / ratio;
         
-        if (imgHeight > pdfHeight) {
-            imgHeight = pdfHeight;
-            imgWidth = pdfHeight * ratio;
-        }
+        // Calculate the ratio of the canvas and the PDF page
+        const widthRatio = pdfWidth / canvasWidth;
+        const heightRatio = pdfHeight / canvasHeight;
+        const ratio = Math.min(widthRatio, heightRatio);
 
+        // Calculate the new dimensions of the image
+        const imgWidth = canvasWidth * ratio;
+        const imgHeight = canvasHeight * ratio;
+
+        // Calculate offsets to center the image
         const xOffset = (pdfWidth - imgWidth) / 2;
-        const yOffset = 0;
+        const yOffset = 0; // Align to top
 
         pdf.addImage(imgData, "PNG", xOffset, yOffset, imgWidth, imgHeight);
         pdf.save(`Ayush-Report-${new Date().toISOString().split('T')[0]}.pdf`);
         setIsSaving(false);
     }).catch(err => {
         console.error("Failed to generate PDF", err);
+        toast({
+            variant: "destructive",
+            title: "PDF Generation Failed",
+            description: "Could not save the report as a PDF. Please try again.",
+        });
         setIsSaving(false);
     });
   };
@@ -217,7 +228,7 @@ export default function ReportDisplay({ report }: ReportDisplayProps) {
               </CardDescription>
             </CardHeader>
             <CardContent className="text-sm">
-              <MarkdownRenderer content={report} />
+              <MarkdownRenderer content={narrative} />
             </CardContent>
           </Card>
         </div>

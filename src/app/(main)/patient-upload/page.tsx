@@ -12,39 +12,21 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FileUp, Upload, CheckCircle, AlertCircle, Info, List } from "lucide-react";
+import { FileUp, Upload, CheckCircle, AlertCircle, Info } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Progress } from "@/components/ui/progress";
-import { formatDistanceToNow } from "date-fns";
 
-type UploadedFile = {
-  name: string;
-  size: number;
-  timestamp: number;
-};
-
-export default function UploadPage() {
+export default function PatientUploadPage() {
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>(() => {
-    if (typeof window === 'undefined') return [];
-    const savedFiles = localStorage.getItem("uploadedFiles");
-    if (savedFiles) {
-      const files: UploadedFile[] = JSON.parse(savedFiles);
-      // Filter out files older than 24 hours
-      const now = Date.now();
-      const oneDay = 24 * 60 * 60 * 1000;
-      return files.filter(f => now - f.timestamp < oneDay);
-    }
-    return [];
-  });
-  
+  const [uploadStatus, setUploadStatus] = useState<"success" | "error" | "idle">("idle");
   const { toast } = useToast();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setFile(e.target.files[0]);
+      setUploadStatus("idle");
       setUploadProgress(0);
     }
   };
@@ -60,7 +42,8 @@ export default function UploadPage() {
     }
 
     setIsUploading(true);
-    
+    setUploadStatus("idle");
+
     // Simulate upload progress
     const progressInterval = setInterval(() => {
       setUploadProgress((prev) => {
@@ -77,31 +60,35 @@ export default function UploadPage() {
     clearInterval(progressInterval);
     setUploadProgress(100);
 
-    const newFile: UploadedFile = {
-      name: file.name,
-      size: file.size,
-      timestamp: Date.now(),
-    };
-
-    const updatedFiles = [newFile, ...uploadedFiles];
-    setUploadedFiles(updatedFiles);
-    localStorage.setItem("uploadedFiles", JSON.stringify(updatedFiles));
+    // Simulate a random success or failure
+    const isSuccess = Math.random() > 0.2; 
     
-    toast({
-      title: "Upload Successful",
-      description: `File "${file.name}" has been uploaded.`,
-    });
+    if (isSuccess) {
+      setUploadStatus("success");
+      toast({
+        title: "Upload Successful",
+        description: `File "${file.name}" has been uploaded.`,
+      });
+    } else {
+      setUploadStatus("error");
+      toast({
+        variant: "destructive",
+        title: "Upload Failed",
+        description: "There was an error uploading your file. Please try again.",
+      });
+    }
     
     setIsUploading(false);
-    setFile(null);
+    // Do not reset the file so user can see what was uploaded
+    // setFile(null); 
   };
 
   return (
     <div className="space-y-8 animate-fade-in">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Upload Report</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Upload My Report</h1>
         <p className="text-muted-foreground">
-          Add a new patient report to the system.
+          Add a personal medical report to your file.
         </p>
       </div>
 
@@ -115,7 +102,7 @@ export default function UploadPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Upload New Patient File</CardTitle>
+          <CardTitle>Upload New Medical File</CardTitle>
           <CardDescription>
             Select a file from your device and click upload.
           </CardDescription>
@@ -152,38 +139,20 @@ export default function UploadPage() {
              <Progress value={uploadProgress} className="w-full" />
           )}
 
+          {uploadStatus === 'success' && (
+            <div className="flex items-center p-4 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-md">
+                <CheckCircle className="mr-2 h-5 w-5" />
+                <span>File uploaded successfully!</span>
+            </div>
+          )}
+           {uploadStatus === 'error' && (
+            <div className="flex items-center p-4 bg-red-100 dark:bg-red-900/30 text-destructive dark:text-red-300 rounded-md">
+                <AlertCircle className="mr-2 h-5 w-5" />
+                <span>File upload failed. Please try again.</span>
+            </div>
+          )}
         </CardContent>
       </Card>
-      
-      {uploadedFiles.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <List className="h-5 w-5" />
-              Recent Uploads (last 24 hours)
-            </CardTitle>
-            <CardDescription>
-              Files you've recently uploaded to the system.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-3">
-              {uploadedFiles.map((uploadedFile, index) => (
-                <li key={index} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                  <div>
-                    <p className="font-medium text-sm">{uploadedFile.name}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {(uploadedFile.size / 1024).toFixed(2)} KB - Uploaded {formatDistanceToNow(uploadedFile.timestamp, { addSuffix: true })}
-                    </p>
-                  </div>
-                   <CheckCircle className="h-5 w-5 text-green-500" />
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      )}
-
     </div>
   );
 }

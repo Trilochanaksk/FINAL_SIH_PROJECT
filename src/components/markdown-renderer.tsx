@@ -1,4 +1,3 @@
-import type { GenerateMinistryOfAyushReportOutput } from "@/ai/flows/generate-ministry-of-ayush-report";
 import React from "react";
 
 type MarkdownRendererProps = {
