@@ -53,7 +53,7 @@ export default function PatientFiles({ files, query }: { files: PatientFile[], q
               </CardFooter>
             </Card>
           </DialogTrigger>
-          <DialogContent className="max-w-4xl">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
             <DialogTitle className="sr-only">
                 Patient Report: {file.patientName} ({file.id})
             </DialogTitle>
