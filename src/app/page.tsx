@@ -16,15 +16,6 @@ export default function LandingPage() {
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg shadow-sm">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center py-2 border-b border-gray-200">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1"><Phone className="size-4" /> </span>
-              <span className="hidden md:flex items-center gap-1"><Mail className="size-4" /> contact@ayulink.com</span>
-            </div>
-            <Button size="sm" asChild>
-              <Link href="/login?role=doctor">Login</Link>
-            </Button>
-          </div>
           <div className="flex justify-between items-center py-4">
             <Link href="/" className="flex items-center gap-2">
               <Logo className="size-8 text-primary" />
@@ -35,8 +26,15 @@ export default function LandingPage() {
               <Link href="#" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors">Features</Link>
               <Link href="#" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors">Contact</Link>
             </nav>
-            <div className="md:hidden">
-              <Menu className="size-6"/>
+            <div className="flex items-center gap-4">
+               <Button asChild>
+                <Link href="/login?role=doctor">Login</Link>
+              </Button>
+              <div className="md:hidden">
+                <Button variant="ghost" size="icon">
+                  <Menu className="size-6"/>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -146,3 +144,5 @@ export default function LandingPage() {
     </div>
   );
 }
+
+    
