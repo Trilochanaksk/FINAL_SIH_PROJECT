@@ -14,24 +14,24 @@ export default function LandingPage() {
   return (
     <div className="w-full min-h-screen bg-background">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg shadow-sm">
+      <header className="fixed top-0 left-0 right-0 z-50">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-4">
             <Link href="/" className="flex items-center gap-2">
-              <Logo className="size-8 text-primary" />
-              <span className="text-2xl font-bold tracking-tight">AyuLink</span>
+              <Logo className="size-8 text-white" />
+              <span className="text-2xl font-bold tracking-tight text-white" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>AyuLink</span>
             </Link>
             <nav className="hidden md:flex items-center gap-6">
-              <Link href="#" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors">Home</Link>
-              <Link href="#" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors">Features</Link>
-              <Link href="#" className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors">Contact</Link>
+              <Link href="#" className="text-lg font-medium text-white/90 hover:text-white transition-colors" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>Home</Link>
+              <Link href="#" className="text-lg font-medium text-white/90 hover:text-white transition-colors" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>Features</Link>
+              <Link href="#" className="text-lg font-medium text-white/90 hover:text-white transition-colors" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>Contact</Link>
             </nav>
             <div className="flex items-center gap-4">
-               <Button asChild>
+               <Button asChild variant="outline" className="bg-transparent text-white border-white hover:bg-white hover:text-primary">
                 <Link href="/login?role=doctor">Login</Link>
               </Button>
               <div className="md:hidden">
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" className="text-white">
                   <Menu className="size-6"/>
                 </Button>
               </div>
