@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-background",
-      "description": "A doctor with a stethoscope touching a futuristic medical icons network.",
-      "imageUrl": "https://img.freepik.com/free-vector/modern-blue-medical-background_4864015.jpg",
-      "imageHint": "medical background"
+      "description": "Abstract medical background with connecting dots and lines.",
+      "imageUrl": "https://i.pinimg.com/736x/8a/a4/d6/8aa4d6934c2c9d57a220261c4794273c.jpg",
+      "imageHint": "medical abstract"
     },
     {
       "id": "login-hero",
@@ -15,7 +15,7 @@
     {
       "id": "landing-hero",
       "description": "An illustration of a doctor with medical items like a thermometer, pills, and a shield icon.",
-      "imageUrl": "https://images.unsplash.com/photo-1539814858141-928517f6afd3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxkb2N0b3IlMjBpbGx1c3RyYXRpb258ZW58MHx8fHwxNzU4NTkwODAxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1539814858141-928517f6afd3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtZWRpY2FsJTIwaWxsdXN0cmF0aW9ufGVufDB8fHx8MTc1ODU5MDgwMXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "doctor illustration"
     },
     {
