@@ -12,7 +12,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { LogOut, Settings, User } from "lucide-react";
+import { LogOut, Settings, User, ArrowLeft } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -72,6 +72,8 @@ export default function AppHeader() {
   const userEmail = role === 'doctor' ? 'doctor.anya@ayulink.com' : 'patient.john@ayulink.com';
   const avatarSeed = role === 'doctor' ? 'doc-avatar' : 'patient-avatar';
 
+  const showBackButton = pathname !== '/dashboard';
+
   return (
     <header className={cn(
       "sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-xl sm:px-6 transition-shadow",
@@ -81,6 +83,12 @@ export default function AppHeader() {
         <div className="md:hidden">
             <SidebarTrigger />
         </div>
+        {showBackButton && (
+          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => router.back()}>
+            <ArrowLeft className="h-5 w-5" />
+            <span className="sr-only">Go back</span>
+          </Button>
+        )}
         <div className="hidden md:block">
             <h1 className="text-xl font-semibold tracking-tight">
             {getPageTitle()}

@@ -10,10 +10,18 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { FileText, Phone, Mail, MapPin, Stethoscope, Workflow, Menu, ShieldCheck, Zap, Bot } from "lucide-react";
+import { FileText, Phone, Mail, MapPin, Stethoscope, Workflow, Menu, ShieldCheck, Zap, Bot, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function LandingPage() {
   const heroImage = PlaceHolderImages.find((p) => p.id === "hero-background");
+  const { setTheme } = useTheme();
 
   const testimonials = [
     {
@@ -51,6 +59,26 @@ export default function LandingPage() {
                <Button asChild variant="outline" className="bg-transparent text-white border-white hover:bg-white hover:text-primary">
                 <Link href="/login?role=doctor">Login</Link>
               </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="icon" className="bg-transparent text-white border-white hover:bg-white hover:text-primary">
+                    <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                    <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                    <span className="sr-only">Toggle theme</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => setTheme("light")}>
+                    Light
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setTheme("dark")}>
+                    Dark
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setTheme("system")}>
+                    System
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
                <div className="md:hidden">
                 <Button variant="ghost" size="icon" className="text-white">
                   <Menu className="size-6"/>
@@ -252,7 +280,6 @@ export default function LandingPage() {
               <ul className="space-y-3">
                 <li className="flex items-center gap-2">
                   <Phone className="size-5" />
-                  <span className="text-gray-400">+91 98765 43210</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Mail className="size-5" />
