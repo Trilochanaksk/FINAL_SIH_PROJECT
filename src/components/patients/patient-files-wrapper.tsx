@@ -14,9 +14,6 @@ export default async function PatientFilesWrapper({ query }: { query: string }) 
       file.id.toLowerCase().includes(query.toLowerCase()) ||
       file.patientName.toLowerCase().includes(query.toLowerCase())
   );
-  
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 500));
 
   return <PatientFiles files={files} query={query} />;
 }

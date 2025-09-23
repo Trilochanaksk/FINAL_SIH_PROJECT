@@ -15,8 +15,6 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
   if (role === 'patient') {
     // In a real app, you would fetch this data based on the logged-in user
     const patientFiles = samplePatientFiles.filter(file => file.id === "PAT-001");
-     // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 500));
     return <PatientDashboard files={patientFiles} />;
   }
   
@@ -26,9 +24,6 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
       file.id.toLowerCase().includes("".toLowerCase()) ||
       file.patientName.toLowerCase().includes("".toLowerCase())
   );
-  
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 500));
 
   return <DoctorDashboard files={files} />;
 }
