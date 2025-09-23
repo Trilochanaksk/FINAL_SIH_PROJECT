@@ -35,7 +35,6 @@ export default function LandingPage() {
                <nav className="hidden md:flex items-center gap-6">
                 <Link href="#" className="text-lg font-medium text-white/90 hover:text-white transition-colors" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>Home</Link>
                 <Link href="#features" className="text-lg font-medium text-white/90 hover:text-white transition-colors" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>Features</Link>
-                <Link href="#contact" className="text-lg font-medium text-white/90 hover:text-white transition-colors" style={{ textShadow: '1px 1_px 4px rgba(0,0,0,0.7)' }}>Contact</Link>
               </nav>
             </div>
             <div className="flex items-center gap-4">
@@ -136,7 +135,7 @@ export default function LandingPage() {
       </main>
 
       {/* Footer */}
-       <footer id="contact" className="bg-gray-800 text-white">
+       <footer className="bg-gray-800 text-white">
         <div className="container mx-auto px-4 py-8 text-center">
           <div className="flex justify-center items-center gap-2 mb-4">
              <Logo className="size-8" />

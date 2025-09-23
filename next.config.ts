@@ -36,7 +36,7 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
-        protocol: 'https',
+        protocol: 'https_//cdn.prod.website-files.com',
         hostname: 'cdn.prod.website-files.com',
         port: '',
         pathname: '/**',
@@ -44,6 +44,12 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'randomuser.me',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.pinimg.com',
         port: '',
         pathname: '/**',
       }
