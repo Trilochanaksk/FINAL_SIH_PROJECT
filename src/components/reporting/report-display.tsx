@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useRef } from "react";
@@ -60,7 +61,7 @@ export default function ReportDisplay({ report }: ReportDisplayProps) {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF({
         orientation: "portrait",
-        unit: "mm",
+        unit: "px",
         format: "a4",
       });
 
@@ -69,18 +70,18 @@ export default function ReportDisplay({ report }: ReportDisplayProps) {
       const canvasWidth = canvas.width;
       const canvasHeight = canvas.height;
       const canvasAspectRatio = canvasWidth / canvasHeight;
-      const pdfAspectRatio = pdfWidth / pdfHeight;
-
+      
       let imgWidth = pdfWidth;
       let imgHeight = pdfWidth / canvasAspectRatio;
-      let y = 0;
-      
+
       if (imgHeight > pdfHeight) {
         imgHeight = pdfHeight;
         imgWidth = imgHeight * canvasAspectRatio;
       }
+      
+      const xOffset = (pdfWidth - imgWidth) / 2;
 
-      pdf.addImage(imgData, "PNG", 0, y, imgWidth, imgHeight);
+      pdf.addImage(imgData, "PNG", xOffset, 0, imgWidth, imgHeight);
       pdf.save(`Ayush-Report-${new Date().toISOString().split('T')[0]}.pdf`);
       setIsSaving(false);
     });
@@ -200,7 +201,7 @@ export default function ReportDisplay({ report }: ReportDisplayProps) {
               </CardDescription>
             </CardHeader>
             <CardContent className="text-sm">
-              <MarkdownRenderer content={narrative} />
+              <MarkdownRenderer content={report} />
             </CardContent>
           </Card>
         </div>
@@ -266,3 +267,5 @@ export default function ReportDisplay({ report }: ReportDisplayProps) {
     </>
   );
 }
+
+    
