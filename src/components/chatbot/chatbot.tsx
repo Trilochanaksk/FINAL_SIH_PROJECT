@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useRef, useEffect, useTransition } from "react";
@@ -70,11 +71,10 @@ export default function Chatbot() {
     <>
       <div className="fixed bottom-6 right-6 z-50">
         <Button
-          size="icon"
           onClick={toggleChat}
-          className="rounded-full w-16 h-16 shadow-lg animate-pulse-glow"
+          className="rounded-full w-24 h-12 shadow-lg animate-pulse-glow flex items-center justify-center"
         >
-          {isOpen ? <X className="h-8 w-8" /> : <Bot className="h-8 w-8" />}
+          {isOpen ? <X className="h-6 w-6" /> : <Bot className="h-6 w-6" />}
           <span className="sr-only">Toggle Chatbot</span>
         </Button>
       </div>
