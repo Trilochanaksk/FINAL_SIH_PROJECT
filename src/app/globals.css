@@ -37,7 +37,6 @@
 
      /* Medical Design System - Professional Healthcare Interface */
 
-    /* Medical Brand Colors */
     --background: 210 20% 98%;
     --foreground: 210 15% 10%;
 
@@ -167,4 +166,28 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer components {
+    .prose {
+        @apply text-foreground;
+    }
+    .prose h1 {
+        @apply text-3xl font-bold mb-4 border-b pb-2;
+    }
+    .prose h2 {
+        @apply text-2xl font-semibold mb-3 border-b pb-2;
+    }
+    .prose h3 {
+        @apply text-xl font-semibold mb-2;
+    }
+    .prose p {
+        @apply leading-relaxed my-2;
+    }
+    .prose ul {
+        @apply list-disc list-inside space-y-1 my-4 pl-4;
+    }
+     .prose li {
+        @apply mb-1;
+    }
 }

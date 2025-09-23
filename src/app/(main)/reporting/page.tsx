@@ -26,7 +26,8 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { getAyushReport } from "@/app/actions";
-import MarkdownRenderer from "@/components/markdown-renderer";
+import ReportDisplay from "@/components/reporting/report-display";
+import type { GenerateMinistryOfAyushReportOutput } from "@/ai/flows/generate-ministry-of-ayush-report";
 
 const FormSchema = z.object({
   dateRange: z.object({
@@ -41,7 +42,7 @@ const FormSchema = z.object({
 
 export default function ReportingPage() {
   const [isPending, startTransition] = useTransition();
-  const [report, setReport] = useState<string | null>(null);
+  const [report, setReport] = useState<GenerateMinistryOfAyushReportOutput | null>(null);
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -168,14 +169,7 @@ export default function ReportingPage() {
       )}
 
       {report && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Generated Report</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <MarkdownRenderer content={report} />
-          </CardContent>
-        </Card>
+         <ReportDisplay report={report} />
       )}
     </div>
   );
