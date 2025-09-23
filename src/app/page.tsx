@@ -44,7 +44,7 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <main>
-        <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32">
+        <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 h-[70vh] flex items-center">
           {heroImage && (
             <Image
               src={heroImage.imageUrl}
@@ -58,20 +58,12 @@ export default function LandingPage() {
           <div className="absolute inset-0 bg-black/30" />
           <div className="relative z-10 container mx-auto px-4 text-white">
             <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-balance">
+              <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-balance" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.7)' }}>
                 Bridging Traditional & Modern Medicine
               </h1>
-              <p className="mt-6 text-lg md:text-xl text-primary-foreground/80 max-w-2xl text-balance">
+              <p className="mt-6 text-lg md:text-xl text-primary-foreground/90 max-w-2xl text-balance" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>
                 AyuLink provides seamless integration between NAMASTE and ICD-11 coding systems, empowering healthcare professionals with a unified, intelligent solution for diagnosis and reporting.
               </p>
-              <div className="mt-10 flex flex-col sm:flex-row gap-4">
-                <Button size="lg" asChild className="text-lg px-8 py-6">
-                  <Link href="/login?role=doctor">Doctor Login</Link>
-                </Button>
-                <Button size="lg" variant="secondary" asChild className="text-lg px-8 py-6">
-                  <Link href="/login?role=patient">Patient Login</Link>
-                </Button>
-              </div>
             </div>
           </div>
         </section>

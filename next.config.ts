@@ -34,6 +34,12 @@ const nextConfig: NextConfig = {
         hostname: 'thumbs.dreamstime.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.prod.website-files.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
