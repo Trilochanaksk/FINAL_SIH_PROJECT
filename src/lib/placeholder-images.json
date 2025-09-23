@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-background",
-      "description": "Abstract medical background with connecting dots and lines.",
-      "imageUrl": "https://i.pinimg.com/originals/a0/16/c0/a016c0a25698b9a23992a54955365511.jpg",
-      "imageHint": "medical abstract"
+      "description": "Abstract blue and white medical background.",
+      "imageUrl": "https://i.pinimg.com/originals/f3/04/b5/f304b5429a3a91b49b897c8449629b35.jpg",
+      "imageHint": "medical background"
     },
     {
       "id": "login-hero",
