@@ -18,7 +18,7 @@ export default function LandingPage() {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-2 border-b border-gray-200">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1"><Phone className="size-4" /> +91 98765 43210</span>
+              <span className="flex items-center gap-1"><Phone className="size-4" /> </span>
               <span className="hidden md:flex items-center gap-1"><Mail className="size-4" /> contact@ayulink.com</span>
             </div>
             <Button size="sm" asChild>
@@ -55,7 +55,7 @@ export default function LandingPage() {
               priority
             />
           )}
-          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-black/30" />
           <div className="relative z-10 container mx-auto px-4 text-white">
             <div className="max-w-3xl">
               <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-balance">
