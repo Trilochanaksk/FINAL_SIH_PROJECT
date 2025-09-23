@@ -1,6 +1,7 @@
 "use server";
 
 import { generateMinistryOfAyushReport, GenerateMinistryOfAyushReportOutput } from "@/ai/flows/generate-ministry-of-ayush-report";
+import { chat } from "@/ai/flows/chatbot-flow";
 
 export async function getAyushReport(
   startDate: Date,
@@ -24,4 +25,15 @@ export async function getAyushReport(
     const errorMessage = e instanceof Error ? e.message : "An unknown error occurred.";
     return { error: `Failed to generate report. Details: ${errorMessage}` };
   }
+}
+
+export async function getChatbotResponse(history: {role: "user" | "model", content: string}[], question: string): Promise<{ response: string } | { error: string }> {
+    try {
+        const response = await chat({ history, question });
+        return { response };
+    } catch (e) {
+        console.error("Error in getChatbotResponse:", e);
+        const errorMessage = e instanceof Error ? e.message : "An unknown error occurred.";
+        return { error: `Failed to get response. Details: ${errorMessage}` };
+    }
 }

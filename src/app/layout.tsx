@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from "@/components/theme-provider";
+import Chatbot from "@/components/chatbot/chatbot";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
           {children}
+          <Chatbot />
           <Toaster />
         </ThemeProvider>
       </body>
