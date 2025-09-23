@@ -3,24 +3,26 @@
  * @fileOverview A simple chatbot flow.
  *
  * - chat - A function that handles the chatbot conversation.
- * - ChatInput - The input type for the chat function.
- * - ChatOutput - The return type for the chat function.
  */
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
-const ChatInputSchema = z.string();
-export type ChatInput = z.infer<typeof ChatInputSchema>;
+// Define schemas internally, do not export them.
+const ChatInputSchema = z.object({ 
+  history: z.array(z.object({role: z.enum(["user", "model"]), content: z.string()})), 
+  question: z.string() 
+});
+type ChatInput = z.infer<typeof ChatInputSchema>;
 
 const ChatOutputSchema = z.string();
-export type ChatOutput = z.infer<typeof ChatOutputSchema>;
+type ChatOutput = z.infer<typeof ChatOutputSchema>;
 
 const chatPrompt = ai.definePrompt({
     name: 'chatbotPrompt',
-    input: { schema: z.object({ history: z.array(z.object({role: z.enum(["user", "model"]), content: z.string()})), question: z.string() }) },
+    input: { schema: ChatInputSchema },
     output: { schema: ChatOutputSchema },
-    prompt: `You are a helpful assistant for AyuLink, a healthcare platform integrating traditional (NAMASTE) and modern (ICD-11) medical coding systems.
+    prompt: `You are a helpful assistant for AyuLink, a healthcare platform integrating traditional (NAMASTE) and modern (ICD-11) medical coding systems. Your primary user is a doctor. Keep your responses concise and helpful.
 
     Here is the conversation history:
     {{#each history}}
@@ -36,7 +38,7 @@ const chatPrompt = ai.definePrompt({
 const chatFlow = ai.defineFlow(
     {
         name: 'chatbotFlow',
-        inputSchema: z.object({ history: z.array(z.object({role: z.enum(["user", "model"]), content: z.string()})), question: z.string() }),
+        inputSchema: ChatInputSchema,
         outputSchema: ChatOutputSchema,
     },
     async (input) => {
@@ -45,6 +47,6 @@ const chatFlow = ai.defineFlow(
     }
 );
 
-export async function chat(input: z.infer<typeof chatFlow.inputSchema>): Promise<ChatOutput> {
+export async function chat(input: ChatInput): Promise<ChatOutput> {
     return chatFlow(input);
 }

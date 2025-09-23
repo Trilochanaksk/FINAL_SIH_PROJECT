@@ -4,10 +4,11 @@ import { useState, useRef, useEffect, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Bot, X, Send, Loader2 } from "lucide-react";
+import { Bot, X, Send, Loader2, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getChatbotResponse } from "@/app/actions";
 import { useToast } from "@/hooks/use-toast";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 type Message = {
   role: "user" | "model";
@@ -47,9 +48,9 @@ export default function Chatbot() {
         toast({
           variant: "destructive",
           title: "Chatbot Error",
-          description: result.error,
+          description: result.error.includes('API key not valid') ? 'Your Gemini API key is not configured. Please add it to the .env file.' : result.error,
         });
-        setMessages((prev) => [...prev, { role: "model", content: "Sorry, I encountered an error. Please try again." }]);
+        setMessages((prev) => [...prev, { role: "model", content: "Sorry, I encountered an error. Please check your API key or try again." }]);
       } else {
         setMessages((prev) => [...prev, { role: "model", content: result.response }]);
       }
@@ -63,7 +64,7 @@ export default function Chatbot() {
             viewport.scrollTop = viewport.scrollHeight;
         }
     }
-  }, [messages]);
+  }, [messages, isPending]);
 
   return (
     <>
@@ -71,7 +72,7 @@ export default function Chatbot() {
         <Button
           size="icon"
           onClick={toggleChat}
-          className="rounded-full w-16 h-16 shadow-lg"
+          className="rounded-full w-16 h-16 shadow-lg animate-pulse-glow"
         >
           {isOpen ? <X className="h-8 w-8" /> : <Bot className="h-8 w-8" />}
           <span className="sr-only">Toggle Chatbot</span>
@@ -82,14 +83,19 @@ export default function Chatbot() {
         <div className="fixed bottom-24 right-6 z-50 w-full max-w-sm bg-card border rounded-lg shadow-xl animate-fade-in">
           <div className="flex flex-col h-[60vh]">
             <header className="flex items-center justify-between p-4 border-b">
-              <h3 className="text-lg font-semibold">AyuLink Assistant</h3>
+              <div className="flex items-center gap-3">
+                 <div className="p-2 bg-primary/10 rounded-full">
+                    <Bot className="h-6 w-6 text-primary" />
+                 </div>
+                 <h3 className="text-lg font-semibold">AyuLink Assistant</h3>
+              </div>
               <Button variant="ghost" size="icon" onClick={toggleChat}>
                 <X className="h-4 w-4" />
               </Button>
             </header>
             
             <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {messages.map((message, index) => (
                   <div
                     key={index}
@@ -99,13 +105,15 @@ export default function Chatbot() {
                     )}
                   >
                     {message.role === "model" && (
-                      <div className="bg-primary text-primary-foreground rounded-full p-2">
-                        <Bot className="h-5 w-5" />
-                      </div>
+                       <Avatar className="w-8 h-8 border-2 border-primary">
+                        <div className="bg-primary text-primary-foreground flex items-center justify-center w-full h-full">
+                           <Bot className="h-5 w-5" />
+                        </div>
+                      </Avatar>
                     )}
                     <div
                       className={cn(
-                        "max-w-[80%] rounded-lg p-3 text-sm",
+                        "max-w-[80%] rounded-lg p-3 text-sm shadow-sm",
                         message.role === "user"
                           ? "bg-primary text-primary-foreground"
                           : "bg-muted"
@@ -113,15 +121,24 @@ export default function Chatbot() {
                     >
                       {message.content}
                     </div>
+                     {message.role === "user" && (
+                       <Avatar className="w-8 h-8 border-2">
+                         <div className="bg-muted text-muted-foreground flex items-center justify-center w-full h-full">
+                            <User className="h-5 w-5" />
+                         </div>
+                      </Avatar>
+                    )}
                   </div>
                 ))}
                 {isPending && (
                   <div className="flex items-start gap-3 justify-start">
-                     <div className="bg-primary text-primary-foreground rounded-full p-2">
-                        <Bot className="h-5 w-5" />
-                      </div>
-                    <div className="bg-muted rounded-lg p-3">
-                        <Loader2 className="h-5 w-5 animate-spin" />
+                     <Avatar className="w-8 h-8 border-2 border-primary">
+                        <div className="bg-primary text-primary-foreground flex items-center justify-center w-full h-full">
+                           <Bot className="h-5 w-5" />
+                        </div>
+                      </Avatar>
+                    <div className="bg-muted rounded-lg p-3 shadow-sm">
+                        <Loader2 className="h-5 w-5 animate-spin text-primary" />
                     </div>
                   </div>
                 )}
