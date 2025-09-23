@@ -1,11 +1,15 @@
+import type { GenerateMinistryOfAyushReportOutput } from "@/ai/flows/generate-ministry-of-ayush-report";
 import React from "react";
 
 type MarkdownRendererProps = {
-  content: string;
+  content: GenerateMinistryOfAyushReportOutput;
 };
 
 const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
-  const lines = content.split("\n");
+  if (!content || typeof content.narrative !== 'string') {
+    return null;
+  }
+  const lines = content.narrative.split("\n");
 
   const renderLine = (line: string, index: number) => {
     if (line.startsWith("### ")) {
