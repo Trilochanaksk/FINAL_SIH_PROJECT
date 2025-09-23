@@ -102,7 +102,7 @@ export default function DoctorDashboard({ files }: { files: PatientFile[] }) {
         <div className="flex flex-col gap-8">
             <h1 className="text-3xl font-bold tracking-tight">Doctor Dashboard</h1>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-                <Card>
+                <Card className="transition-all hover:shadow-lg hover:border-primary cursor-pointer">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">
                         Total Patients
@@ -116,7 +116,7 @@ export default function DoctorDashboard({ files }: { files: PatientFile[] }) {
                         </p>
                     </CardContent>
                 </Card>
-                <Card>
+                <Card className="transition-all hover:shadow-lg hover:border-primary cursor-pointer">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">
                         Diagnoses This Month
@@ -130,7 +130,7 @@ export default function DoctorDashboard({ files }: { files: PatientFile[] }) {
                         </p>
                     </CardContent>
                 </Card>
-                <Card>
+                <Card className="transition-all hover:shadow-lg hover:border-primary cursor-pointer">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">Reports Filed</CardTitle>
                         <FileText className="h-5 w-5 text-muted-foreground" />
@@ -142,7 +142,7 @@ export default function DoctorDashboard({ files }: { files: PatientFile[] }) {
                         </p>
                     </CardContent>
                 </Card>
-                <Card>
+                <Card className="transition-all hover:shadow-lg hover:border-primary cursor-pointer">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">System Activity</CardTitle>
                         <Activity className="h-5 w-5 text-muted-foreground" />
