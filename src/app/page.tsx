@@ -42,7 +42,7 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <main>
-        <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 h-[70vh] flex items-center">
+        <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 h-[75vh] flex items-center">
           {heroImage && (
             <Image
               src={heroImage.imageUrl}
@@ -144,5 +144,3 @@ export default function LandingPage() {
     </div>
   );
 }
-
-    
