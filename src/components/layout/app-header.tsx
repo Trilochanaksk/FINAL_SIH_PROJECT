@@ -12,18 +12,19 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { LogOut, Settings, User, ArrowLeft } from "lucide-react";
+import { LogOut, Settings, User, ArrowLeft, Bot } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { Logo } from "../icons/logo";
+import { useChatbotStore } from "@/hooks/use-chatbot-store";
 
 export default function AppHeader() {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const role = searchParams.get('role') || 'doctor';
+  const { setIsOpen } = useChatbotStore();
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -97,6 +98,10 @@ export default function AppHeader() {
       </div>
 
       <div className="ml-auto flex items-center gap-4">
+         <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full" onClick={() => setIsOpen(true)}>
+          <Bot className="h-5 w-5 text-primary" />
+          <span className="sr-only">Open Chatbot</span>
+        </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-9 w-9 rounded-full">

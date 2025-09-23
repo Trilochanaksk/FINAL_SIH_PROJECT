@@ -9,7 +9,8 @@ import { Bot, X, Send, Loader2, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getChatbotResponse } from "@/app/actions";
 import { useToast } from "@/hooks/use-toast";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar } from "../ui/avatar";
+import { useChatbotStore } from "@/hooks/use-chatbot-store";
 
 type Message = {
   role: "user" | "model";
@@ -17,7 +18,7 @@ type Message = {
 };
 
 export default function Chatbot() {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, setIsOpen } = useChatbotStore();
   const [messages, setMessages] = useState<Message[]>([
     { role: "model", content: "Hello! How can I assist you with AyuLink today?" },
   ]);
@@ -25,10 +26,6 @@ export default function Chatbot() {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
-
-  const toggleChat = () => {
-    setIsOpen(!isOpen);
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -69,18 +66,8 @@ export default function Chatbot() {
 
   return (
     <>
-      <div className="fixed bottom-6 right-6 z-50">
-        <Button
-          onClick={toggleChat}
-          className="rounded-full w-24 h-12 shadow-lg animate-pulse-glow flex items-center justify-center"
-        >
-          {isOpen ? <X className="h-6 w-6" /> : <Bot className="h-6 w-6" />}
-          <span className="sr-only">Toggle Chatbot</span>
-        </Button>
-      </div>
-
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-full max-w-sm bg-card border rounded-lg shadow-xl animate-fade-in">
+        <div className="fixed bottom-6 right-6 z-50 w-full max-w-sm bg-card border rounded-lg shadow-xl animate-fade-in">
           <div className="flex flex-col h-[60vh]">
             <header className="flex items-center justify-between p-4 border-b">
               <div className="flex items-center gap-3">
@@ -89,7 +76,7 @@ export default function Chatbot() {
                  </div>
                  <h3 className="text-lg font-semibold">AyuLink Assistant</h3>
               </div>
-              <Button variant="ghost" size="icon" onClick={toggleChat}>
+              <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
                 <X className="h-4 w-4" />
               </Button>
             </header>
