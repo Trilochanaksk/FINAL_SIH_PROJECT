@@ -15,7 +15,6 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRightLeft, Loader2 } from "lucide-react";
 import { intelligentDiagnosisSearch } from "@/ai/flows/intelligent-diagnosis-search";
-import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 
 type ConvertedDiagnosis = {
@@ -29,7 +28,6 @@ export default function PatientReportView({ report }: { report: PatientFile }) {
   const [convertedData, setConvertedData] = useState<
     ConvertedDiagnosis[] | null
   >(null);
-  const { toast } = useToast();
 
   const handleConversion = () => {
     setConvertedData(null);
@@ -65,17 +63,8 @@ export default function PatientReportView({ report }: { report: PatientFile }) {
         const finalConverted = await Promise.all(conversionPromises);
 
         setConvertedData(finalConverted);
-        toast({
-          title: "Conversion Successful",
-          description: `Converted ${report.diagnoses.length} diagnoses.`,
-        });
       } catch (error) {
         console.error("Conversion failed:", error);
-        toast({
-          variant: "destructive",
-          title: "Conversion Failed",
-          description: "Could not convert codes. Please try again.",
-        });
       }
     });
   };
