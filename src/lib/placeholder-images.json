@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-background",
-      "description": "A doctor using a tablet with a futuristic medical interface in a hospital hallway.",
-      "imageUrl": "https://images.unsplash.com/photo-1538108144229-1c5c29875932?q=80&w=2070&auto=format&fit=crop",
-      "imageHint": "doctor future"
+      "description": "A doctor with a stethoscope touching a futuristic medical icons network.",
+      "imageUrl": "https://thumbs.dreamstime.com/b/medicine-doctor-stethoscope-touching-medical-icons-network-medicine-doctor-stethoscope-touching-icons-medical-network-111489030.jpg",
+      "imageHint": "doctor network"
     },
     {
       "id": "login-hero",
