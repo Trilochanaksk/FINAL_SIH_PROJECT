@@ -68,6 +68,10 @@ export default function ReportingPage() {
     });
   }
 
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
   return (
     <div className="space-y-8">
       <div>
@@ -129,6 +133,8 @@ export default function ReportingPage() {
                           }}
                           onSelect={field.onChange}
                           numberOfMonths={2}
+                          toDate={yesterday}
+                          disabled={(date) => date >= today}
                         />
                       </PopoverContent>
                     </Popover>
