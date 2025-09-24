@@ -1,7 +1,8 @@
 "use server";
 
 import { generateMinistryOfAyushReport, GenerateMinistryOfAyushReportOutput } from "@/ai/flows/generate-ministry-of-ayush-report";
-import { chat, ChatInput, ChatOutput } from "@/ai/flows/chatbot-flow";
+import { chat } from "@/ai/flows/chatbot-flow";
+import { z } from "zod";
 
 export async function getAyushReport(
   startDate: Date,
@@ -26,6 +27,22 @@ export async function getAyushReport(
     return { error: `Failed to generate report. Details: ${errorMessage}` };
   }
 }
+
+const ChatInputSchema = z.object({
+  message: z.string(),
+  history: z.array(z.object({
+    role: z.enum(['user', 'model']),
+    content: z.array(z.object({ text: z.string() })),
+  })).optional(),
+});
+export type ChatInput = z.infer<typeof ChatInputSchema>;
+
+
+const ChatOutputSchema = z.object({
+  response: z.string(),
+});
+export type ChatOutput = z.infer<typeof ChatOutputSchema>;
+
 
 export async function getChatbotResponse(input: ChatInput): Promise<ChatOutput> {
   try {
