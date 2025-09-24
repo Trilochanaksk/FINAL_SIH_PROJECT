@@ -3,7 +3,7 @@
 
 import { usePathname, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { Home, Search, Upload, MessageCircle } from 'lucide-react';
+import { Home, Search, Upload } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useChatbotStore } from '@/hooks/use-chatbot-store';
 import { Button } from '../ui/button';
@@ -112,7 +112,7 @@ export default function BottomNav() {
         <Button
             variant="ghost"
             onClick={openChatbot}
-            className="inline-flex flex-col items-center justify-center px-5 hover:bg-muted-foreground/10 group text-muted-foreground"
+            className="inline-flex flex-col items-center justify-center px-5 hover:bg-muted-foreground/10 group text-muted-foreground h-full"
         >
             <ChatbotIcon className="w-8 h-8 mb-1" />
             <span className="text-xs">Chat</span>

@@ -20,8 +20,6 @@ import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
 import Link from 'next/link';
 import Chatbot from '@/components/chatbot/chatbot';
-import { useChatbotStore } from '@/hooks/use-chatbot-store';
-import { cn } from '@/lib/utils';
 import BottomNav from '@/components/layout/bottom-nav';
 
 export default function MainLayout({
@@ -31,7 +29,6 @@ export default function MainLayout({
 }) {
   const searchParams = useSearchParams();
   const role = searchParams.get('role') || 'doctor';
-  const { openChatbot } = useChatbotStore();
 
   return (
     <SidebarProvider>
