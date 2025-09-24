@@ -5,7 +5,6 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-import { generate } from 'genkit';
 
 const ChatHistorySchema = z.array(
   z.object({
@@ -24,7 +23,7 @@ export type ChatInput = z.infer<typeof ChatInputSchema>;
 export async function chat(input: ChatInput) {
     const { message, history } = input;
   
-    const result = await generate({
+    const result = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
       history: history,
       prompt: `You are a helpful AI assistant named AyuLink Assistant. 
@@ -42,7 +41,6 @@ export async function chat(input: ChatInput) {
     Your Answer:`,
     });
   
-    // This is the definitive fix. If result.text is null or undefined, it will default to a safe string.
     const responseText = result.text || "Sorry, I am having trouble responding right now. Please try again later.";
   
     return { response: responseText };
