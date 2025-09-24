@@ -62,9 +62,9 @@ export default function MainLayout({
         </main>
          <Button 
             onClick={openChatbot}
-            className="fixed bottom-6 right-6 h-16 w-16 rounded-full shadow-lg z-50 animate-pulse-glow"
+            className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg z-50"
         >
-            <Bot className="h-8 w-8" />
+            <Bot className="h-7 w-7" />
             <span className="sr-only">Open Chatbot</span>
         </Button>
         <Chatbot />
