@@ -18,7 +18,7 @@ export default function GlobalChatbot() {
                 size="icon"
                 onClick={openChatbot}
                 className={cn(
-                    'fixed bottom-6 right-6 z-40 h-16 w-16 rounded-full p-0 shadow-strong transition-transform hover:scale-110'
+                    'fixed bottom-6 right-6 z-40 h-16 w-16 rounded-full p-0 transition-transform hover:scale-110 animate-pulse-glow bg-transparent hover:bg-transparent'
                 )}
             >
               <Image
