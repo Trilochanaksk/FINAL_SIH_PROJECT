@@ -9,6 +9,7 @@ import { getChatbotResponse } from '@/app/actions';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { useToast } from '@/hooks/use-toast';
+import MarkdownRenderer from '@/components/markdown-renderer';
 
 type Message = {
   role: 'user' | 'model';
@@ -140,7 +141,7 @@ export default function Chatbot() {
                     : 'bg-muted'
                 )}
               >
-                {msg.content.map((c, i) => c.text).join('')}
+                <MarkdownRenderer content={msg.content.map((c) => c.text).join('')} />
               </div>
                {msg.role === 'user' && (
                 <Avatar className="w-8 h-8 border">
