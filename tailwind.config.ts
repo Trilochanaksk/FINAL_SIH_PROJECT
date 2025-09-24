@@ -68,12 +68,9 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        "biscuit-cream": {
-          DEFAULT: "#EADDC4",
+        "columbia-blue": {
+          DEFAULT: "#C4D8E2",
         },
-        "sparkling-pink": {
-          DEFAULT: "#EC4899",
-        }
       },
       borderRadius: {
         lg: "var(--radius)",
