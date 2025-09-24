@@ -22,7 +22,7 @@ export default function GlobalChatbot() {
                 )}
             >
               <Image
-                src="/chatbot-icon.png"
+                src="https://i.pinimg.com/736x/ad/0e/53/ad0e537aefc65e02de2b2656339a4062.jpg"
                 alt="Chatbot Icon"
                 width={64}
                 height={64}
