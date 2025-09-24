@@ -19,7 +19,7 @@ export default function GlobalChatbot() {
                 size="icon"
                 className={cn(
                     'fixed bottom-6 right-6 z-40 h-14 w-14 rounded-full shadow-strong transition-transform hover:scale-110',
-                    'bg-biscuit-cream hover:bg-biscuit-cream/90'
+                    'bg-sparkling-pink hover:bg-sparkling-pink/90'
                 )}
                 >
                 <Sparkles className="h-7 w-7 text-primary-foreground" />

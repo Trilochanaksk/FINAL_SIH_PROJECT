@@ -70,6 +70,9 @@ export default {
         },
         "biscuit-cream": {
           DEFAULT: "#EADDC4",
+        },
+        "sparkling-pink": {
+          DEFAULT: "#EC4899",
         }
       },
       borderRadius: {
