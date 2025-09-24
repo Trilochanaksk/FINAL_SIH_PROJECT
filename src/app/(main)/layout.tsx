@@ -15,9 +15,10 @@ import {
 } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
+import { LogOut, Bot } from "lucide-react";
 import Link from "next/link";
 import Chatbot from "@/components/chatbot/chatbot";
+import { useChatbotStore } from "@/hooks/use-chatbot-store";
 
 
 export default function MainLayout({
@@ -27,6 +28,7 @@ export default function MainLayout({
 }) {
   const searchParams = useSearchParams();
   const role = searchParams.get('role') || 'doctor';
+  const { openChatbot } = useChatbotStore();
 
   return (
     <SidebarProvider>
@@ -58,6 +60,13 @@ export default function MainLayout({
                  {children}
             </div>
         </main>
+         <Button 
+            onClick={openChatbot}
+            className="fixed bottom-6 right-6 h-16 w-16 rounded-full shadow-lg z-50 animate-pulse-glow"
+        >
+            <Bot className="h-8 w-8" />
+            <span className="sr-only">Open Chatbot</span>
+        </Button>
         <Chatbot />
       </SidebarInset>
     </SidebarProvider>

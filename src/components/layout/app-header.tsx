@@ -12,7 +12,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { LogOut, Settings, User, ArrowLeft, Bot } from "lucide-react";
+import { LogOut, Settings, ArrowLeft, Bot } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -98,11 +98,6 @@ export default function AppHeader() {
       </div>
 
       <div className="ml-auto flex items-center gap-2">
-         <Button variant="ghost" size="icon" onClick={openChatbot}>
-            <Bot className="h-5 w-5" />
-            <span className="sr-only">Open Chatbot</span>
-        </Button>
-
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-9 w-9 rounded-full">
