@@ -20,11 +20,6 @@ const ChatInputSchema = z.object({
 });
 type ChatInput = z.infer<typeof ChatInputSchema>;
 
-const ChatOutputSchema = z.object({
-  response: z.string().describe("The chatbot's response."),
-});
-type ChatOutput = z.infer<typeof ChatOutputSchema>;
-
 const chatPrompt = ai.definePrompt({
   name: 'chatbotPrompt',
   input: { schema: ChatInputSchema },
@@ -59,11 +54,12 @@ const chatFlow = ai.defineFlow(
   },
   async (input) => {
     const { output } = await chatPrompt(input);
+    // Ensure that we always return a string, even if the model returns null/undefined.
     return output || "Sorry, I am having trouble responding right now. Please try again later.";
   }
 );
 
-export async function chat(input: ChatInput): Promise<ChatOutput> {
+export async function chat(input: ChatInput) {
   const response = await chatFlow(input);
   return { response };
 }
