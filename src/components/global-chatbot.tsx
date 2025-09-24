@@ -19,7 +19,7 @@ export default function GlobalChatbot() {
                 )}
             >
               <Image
-                src="https://i.pinimg.com/736x/8e/96/1e/8e961ed75303f3da90a8c27fb4e88ec4.jpg"
+                src="https://cdn.prod.website-files.com/6613fb094bf4b69c86a1dfd9/6613fb094bf4b69c86a1e053_gemini-icon.svg"
                 alt="Chatbot Icon"
                 width={64}
                 height={64}
