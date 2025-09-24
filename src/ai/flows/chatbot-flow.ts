@@ -59,7 +59,7 @@ const chatFlow = ai.defineFlow(
   },
   async (input) => {
     const { output } = await chatPrompt(input);
-    return output!;
+    return output || "Sorry, I am having trouble responding right now. Please try again later.";
   }
 );
 
