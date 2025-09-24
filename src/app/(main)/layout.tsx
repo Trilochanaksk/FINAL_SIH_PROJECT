@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { LogOut, Bot } from "lucide-react";
+import { LogOut, Sparkles } from "lucide-react";
 import Link from "next/link";
 import Chatbot from "@/components/chatbot/chatbot";
 import { useChatbotStore } from "@/hooks/use-chatbot-store";
@@ -65,10 +65,10 @@ export default function MainLayout({
             onClick={openChatbot}
             className={cn(
                 "fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg z-50",
-                "bg-primary hover:bg-primary/90"
+                role === 'doctor' ? 'bg-primary hover:bg-primary/90' : 'bg-secondary hover:bg-secondary/90'
             )}
         >
-            <Bot className="h-8 w-8 text-primary-foreground" />
+            <Sparkles className="h-8 w-8 text-primary-foreground" />
             <span className="sr-only">Open Chatbot</span>
         </Button>
         <Chatbot />
