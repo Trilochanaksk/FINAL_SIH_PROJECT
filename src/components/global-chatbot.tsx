@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useChatbotStore } from "@/hooks/use-chatbot-store";
@@ -19,7 +20,7 @@ export default function GlobalChatbot() {
                 )}
             >
               <Image
-                src="https://cdn.prod.website-files.com/6613fb094bf4b69c86a1dfd9/6613fb094bf4b69c86a1e053_gemini-icon.svg"
+                src="https://i.pinimg.com/736x/c0/de/c5/c0dec5962db905e0a4adde50daf4a6e6.jpg"
                 alt="Chatbot Icon"
                 width={64}
                 height={64}
