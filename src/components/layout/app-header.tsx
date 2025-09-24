@@ -12,19 +12,17 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { LogOut, Settings, ArrowLeft, Bot } from "lucide-react";
+import { LogOut, Settings, ArrowLeft } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { useChatbotStore } from "@/hooks/use-chatbot-store";
 
 export default function AppHeader() {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const role = searchParams.get('role') || 'doctor';
-  const { openChatbot } = useChatbotStore();
 
   const [scrolled, setScrolled] = useState(false);
 
