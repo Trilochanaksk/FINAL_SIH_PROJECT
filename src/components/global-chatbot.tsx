@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useChatbotStore } from "@/hooks/use-chatbot-store";
@@ -16,14 +15,14 @@ export default function GlobalChatbot() {
             <Button
                 onClick={openChatbot}
                 className={cn(
-                    'fixed bottom-6 right-6 z-40 h-20 w-20 rounded-full p-2 transition-transform hover:scale-110 bg-transparent'
+                    'fixed bottom-6 right-6 z-40 h-24 w-24 rounded-full p-2 transition-transform hover:scale-110 bg-transparent'
                 )}
             >
               <Image
-                src="https://i.pinimg.com/736x/c0/de/c5/c0dec5962db905e0a4adde50daf4a6e6.jpg"
+                src="https://i.pinimg.com/736x/3f/7f/51/3f7f51eeaa56b4c8a80c0c64bc8fa103.jpg"
                 alt="Chatbot Icon"
-                width={80}
-                height={80}
+                width={96}
+                height={96}
                 className="rounded-full"
               />
             </Button>
