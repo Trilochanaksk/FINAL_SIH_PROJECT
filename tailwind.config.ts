@@ -68,6 +68,9 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        "biscuit-cream": {
+          DEFAULT: "#EADDC4",
+        }
       },
       borderRadius: {
         lg: "var(--radius)",

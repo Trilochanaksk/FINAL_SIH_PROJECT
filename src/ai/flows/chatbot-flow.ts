@@ -55,7 +55,11 @@ const chatFlow = ai.defineFlow(
   async (input) => {
     const { output } = await chatPrompt(input);
     // Ensure that we always return a string, even if the model returns null/undefined.
-    return output || "Sorry, I am having trouble responding right now. Please try again later.";
+    // This is a robust check to prevent schema validation errors on the client.
+    if (output === null || output === undefined) {
+        return "Sorry, I am having trouble responding right now. Please try again later.";
+    }
+    return output;
   }
 );
 
