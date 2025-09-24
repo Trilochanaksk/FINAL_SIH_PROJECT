@@ -17,6 +17,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
+import Chatbot from "@/components/chatbot/chatbot";
 
 
 export default function MainLayout({
@@ -57,6 +58,7 @@ export default function MainLayout({
                  {children}
             </div>
         </main>
+        <Chatbot />
       </SidebarInset>
     </SidebarProvider>
   );

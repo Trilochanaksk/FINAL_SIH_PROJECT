@@ -17,12 +17,14 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { useChatbotStore } from "@/hooks/use-chatbot-store";
 
 export default function AppHeader() {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const role = searchParams.get('role') || 'doctor';
+  const { openChatbot } = useChatbotStore();
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -95,7 +97,12 @@ export default function AppHeader() {
         </div>
       </div>
 
-      <div className="ml-auto flex items-center gap-4">
+      <div className="ml-auto flex items-center gap-2">
+         <Button variant="ghost" size="icon" onClick={openChatbot}>
+            <Bot className="h-5 w-5" />
+            <span className="sr-only">Open Chatbot</span>
+        </Button>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-9 w-9 rounded-full">
