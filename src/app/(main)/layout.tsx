@@ -15,10 +15,11 @@ import {
 } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { LogOut, Bot } from "lucide-react";
+import { LogOut } from "lucide-react";
 import Link from "next/link";
 import Chatbot from "@/components/chatbot/chatbot";
 import { useChatbotStore } from "@/hooks/use-chatbot-store";
+import { cn } from "@/lib/utils";
 
 
 export default function MainLayout({
@@ -62,9 +63,12 @@ export default function MainLayout({
         </main>
          <Button 
             onClick={openChatbot}
-            className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg z-50"
+            className={cn(
+                "fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg z-50",
+                role === 'doctor' ? 'bg-primary hover:bg-primary/90' : 'bg-secondary hover:bg-secondary/80'
+            )}
         >
-            <Bot className="h-7 w-7" />
+            <Logo className="h-8 w-8 text-primary-foreground" />
             <span className="sr-only">Open Chatbot</span>
         </Button>
         <Chatbot />
