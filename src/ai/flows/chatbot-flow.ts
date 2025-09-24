@@ -34,7 +34,9 @@ export async function chat(input: ChatInput) {
     - Your knowledge is based on the application's context.
     - If asked about something you cannot do, politely explain your limitations.
     
-    Start the conversation by introducing yourself and asking how you can help.
+    When you provide a direct answer to the user's question, wrap it in markdown bold syntax like this: **This is the answer.**
+
+    Start the conversation by introducing yourself and asking how you can help, unless a history is provided.
     
     User Question: ${message}
     
