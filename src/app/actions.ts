@@ -46,8 +46,13 @@ export type ChatOutput = z.infer<typeof ChatOutputSchema>;
 
 export async function getChatbotResponse(input: ChatInput): Promise<ChatOutput> {
   try {
-    const response = await chat(input);
-    return response;
+    const result = await chat(input);
+    // Safeguard to ensure we always return a valid response object.
+    if (!result || typeof result.response !== 'string') {
+        console.error("Chatbot flow returned an invalid response:", result);
+        return { response: "I'm sorry, I could not process that. Please try again." };
+    }
+    return result;
   } catch (e) {
     console.error("Error in getChatbotResponse:", e);
     const errorMessage = e instanceof Error ? e.message : "An unknown error occurred.";

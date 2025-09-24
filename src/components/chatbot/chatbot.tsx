@@ -28,17 +28,21 @@ export default function Chatbot() {
       startTransition(async () => {
         try {
             const initialResponse = await getChatbotResponse({ message: 'Hello' });
-            setMessages([
-            {
-                role: 'model',
-                content: [{ text: initialResponse.response }],
-            },
-            ]);
+            if (initialResponse && initialResponse.response) {
+              setMessages([
+              {
+                  role: 'model',
+                  content: [{ text: initialResponse.response }],
+              },
+              ]);
+            } else {
+               throw new Error("Received an empty initial response.");
+            }
         } catch (error) {
             toast({
                 variant: 'destructive',
                 title: 'Chatbot Error',
-                description: 'Could not initialize the chatbot. Please ensure your API key is set.'
+                description: 'Could not initialize the chatbot. Please try again.'
             });
             console.error('Chatbot initialization failed:', error);
         }
@@ -68,18 +72,28 @@ export default function Chatbot() {
                 history: history,
             });
 
-            const modelMessage: Message = {
-                role: 'model',
-                content: [{ text: res.response }],
-            };
-            setMessages((prev) => [...prev, modelMessage]);
+            if (res && res.response) {
+              const modelMessage: Message = {
+                  role: 'model',
+                  content: [{ text: res.response }],
+              };
+              setMessages((prev) => [...prev, modelMessage]);
+            } else {
+              throw new Error("Received an empty response from the server.");
+            }
         } catch (error) {
+             const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred.";
              toast({
                 variant: 'destructive',
                 title: 'Chatbot Error',
-                description: 'Could not get a response. Please check your API key and network.'
+                description: `Could not get a response. Details: ${errorMessage}`
             });
             console.error('Chatbot response failed:', error);
+             const errorResponseMessage: Message = {
+                role: 'model',
+                content: [{ text: "Sorry, I'm having trouble connecting. Please check your setup and try again." }],
+            };
+            setMessages((prev) => [...prev, errorResponseMessage]);
         }
     });
   };
