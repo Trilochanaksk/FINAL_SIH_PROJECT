@@ -5,26 +5,29 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
+import { generate } from 'genkit';
+
+const ChatHistorySchema = z.array(
+  z.object({
+    role: z.enum(['user', 'model']),
+    content: z.array(z.object({ text: z.string() })),
+  })
+);
 
 const ChatInputSchema = z.object({
   message: z.string().describe("The user's message."),
-  history: z
-    .array(
-      z.object({
-        role: z.enum(['user', 'model']),
-        content: z.array(z.object({ text: z.string() })),
-      })
-    )
-    .optional()
-    .describe('The chat history.'),
+  history: ChatHistorySchema.optional().describe('The chat history.'),
 });
-type ChatInput = z.infer<typeof ChatInputSchema>;
+export type ChatInput = z.infer<typeof ChatInputSchema>;
 
-const chatPrompt = ai.definePrompt({
-  name: 'chatbotPrompt',
-  input: { schema: ChatInputSchema },
-  output: { schema: z.string() }, // Expecting a simple string response
-  prompt: `You are a helpful AI assistant named AyuLink Assistant. 
+
+export async function chat(input: ChatInput) {
+    const { message, history } = input;
+  
+    const result = await generate({
+      model: 'googleai/gemini-2.5-flash',
+      history: history,
+      prompt: `You are a helpful AI assistant named AyuLink Assistant. 
     Your role is to assist users of the AyuLink platform, which integrates traditional Indian medicine (Ayurveda, Siddha, Unani) with modern ICD-11 coding.
 
     - Be friendly, professional, and concise.
@@ -34,36 +37,14 @@ const chatPrompt = ai.definePrompt({
     
     Start the conversation by introducing yourself and asking how you can help.
     
-    {{#if history}}
-    Chat History:
-    {{#each history}}
-    {{role}}: {{#each content}}{{text}}{{/each}}
-    {{/each}}
-    {{/if}}
-    
-    User Question: {{{message}}}
+    User Question: ${message}
     
     Your Answer:`,
-});
-
-const chatFlow = ai.defineFlow(
-  {
-    name: 'chatbotFlow',
-    inputSchema: ChatInputSchema,
-    outputSchema: z.string(),
-  },
-  async (input) => {
-    const { output } = await chatPrompt(input);
-    // Ensure that we always return a string, even if the model returns null/undefined.
-    // This is a robust check to prevent schema validation errors on the client.
-    if (output === null || output === undefined) {
-        return "Sorry, I am having trouble responding right now. Please try again later.";
-    }
-    return output;
+    });
+  
+    // This is the definitive fix. If result.text is null or undefined, it will default to a safe string.
+    const responseText = result.text || "Sorry, I am having trouble responding right now. Please try again later.";
+  
+    return { response: responseText };
   }
-);
-
-export async function chat(input: ChatInput) {
-  const response = await chatFlow(input);
-  return { response };
-}
+  
