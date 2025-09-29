@@ -20,7 +20,7 @@ const ChatInputSchema = z.object({
 export type ChatInput = z.infer<typeof ChatInputSchema>;
 
 
-export async function chat(input: ChatInput) {
+export async function chat(input: ChatInput): Promise<string> {
     const { message, history } = input;
   
     const result = await ai.generate({
@@ -45,6 +45,5 @@ export async function chat(input: ChatInput) {
   
     const responseText = result.text || "Sorry, I am having trouble responding right now. Please try again later.";
   
-    return { response: responseText };
+    return responseText;
   }
-  
