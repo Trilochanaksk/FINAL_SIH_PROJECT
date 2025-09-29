@@ -123,6 +123,16 @@ export default function ReportDisplay({ report }: ReportDisplayProps) {
 
   return (
     <>
+      <div className="flex justify-end mb-4">
+        <Button onClick={handleSavePdf} disabled={isSaving}>
+          {isSaving ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <Download className="mr-2 h-4 w-4" />
+          )}
+          Save as PDF
+        </Button>
+      </div>
       <div ref={reportRef} className="space-y-8 animate-fade-in p-4 bg-background">
         <Card>
             <CardHeader>
