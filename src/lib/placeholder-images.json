@@ -15,7 +15,7 @@
     {
       "id": "landing-hero",
       "description": "An illustration of a doctor with medical items like a thermometer, pills, and a shield icon.",
-      "imageUrl": "https://images.unsplash.com/photo-1539814858141-928517f6afd3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtZWRpY2FsJTIwaWxsdXN0cmF0aW9ufGVufDB8fHx8MTc1ODU5MDgwMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://i.pinimg.com/736x/3f/7f/51/3f7f51eeaa56b4c8a80c0c64bc8fa103.jpg",
       "imageHint": "doctor illustration"
     },
     {
@@ -27,7 +27,7 @@
     {
       "id": "feature-2",
       "description": "An empathetic doctor consulting with a patient in a clinic.",
-      "imageUrl": "https://images.unsplash.com/photo-1606374173750-a2fe6f17be1c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cGF0aWVudCUyMGRvY3RvcnxlbnwwfHx8fDE3NTg1OTA4MDF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://i.pinimg.com/736x/3f/7f/51/3f7f51eeaa56b4c8a80c0c64bc8fa103.jpg",
       "imageHint": "patient doctor"
     },
     {

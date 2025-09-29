@@ -32,6 +32,7 @@ import {
   Legend,
 } from "recharts";
 import { FileText, Syringe, Users, Download, Loader2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 type ReportDisplayProps = {
   report: GenerateMinistryOfAyushReportOutput;
@@ -49,6 +50,7 @@ export default function ReportDisplay({ report }: ReportDisplayProps) {
   const { summary, namasteBreakdown, icd11Breakdown, systemDistribution, narrative } = report;
   const reportRef = useRef<HTMLDivElement>(null);
   const [isSaving, setIsSaving] = React.useState(false);
+  const { toast } = useToast();
 
   const handleSavePdf = () => {
     const input = reportRef.current;
@@ -121,17 +123,6 @@ export default function ReportDisplay({ report }: ReportDisplayProps) {
 
   return (
     <>
-      <div className="flex justify-end mb-4">
-        <Button onClick={handleSavePdf} disabled={isSaving}>
-          {isSaving ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <Download className="mr-2 h-4 w-4" />
-          )}
-          Save as PDF
-        </Button>
-      </div>
-
       <div ref={reportRef} className="space-y-8 animate-fade-in p-4 bg-background">
         <Card>
             <CardHeader>
