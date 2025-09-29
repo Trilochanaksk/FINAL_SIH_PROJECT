@@ -1,11 +1,8 @@
 
 "use client";
 
-import React, { useRef } from "react";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+import React from "react";
 import type { GenerateMinistryOfAyushReportOutput } from "@/ai/flows/generate-ministry-of-ayush-report";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -31,8 +28,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { FileText, Syringe, Users, Download, Loader2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { FileText, Syringe, Users } from "lucide-react";
 
 type ReportDisplayProps = {
   report: GenerateMinistryOfAyushReportOutput;
@@ -48,92 +44,41 @@ const chartColors = [
 
 export default function ReportDisplay({ report }: ReportDisplayProps) {
   const { summary, namasteBreakdown, icd11Breakdown, systemDistribution, narrative } = report;
-  const reportRef = useRef<HTMLDivElement>(null);
-  const [isSaving, setIsSaving] = React.useState(false);
-  const { toast } = useToast();
-
-  const handleSavePdf = () => {
-    const input = reportRef.current;
-    if (!input) return;
-
-    setIsSaving(true);
-    
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    
-    html2canvas(input, {
-        scale: 2, // Higher scale for better quality
-        useCORS: true,
-        backgroundColor: isDarkMode ? '#020817' : '#FFFFFF',
-        onclone: (document) => {
-            // This is a crucial step for recharts to render correctly in the clone
-            const charts = document.querySelectorAll('.recharts-wrapper');
-            charts.forEach(chart => {
-                chart.style.display = 'block';
-                const container = chart.closest('.recharts-responsive-container');
-                if (container) {
-                    container.style.width = `${container.clientWidth}px`;
-                    container.style.height = `${container.clientHeight}px`;
-                }
-            });
-        }
-    }).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF({
-            orientation: "portrait",
-            unit: "pt", // Use points for better scaling
-            format: "a4",
-        });
-
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        const canvasWidth = canvas.width;
-        const canvasHeight = canvas.height;
-        
-        // Calculate the ratio of the canvas and the PDF page
-        const widthRatio = pdfWidth / canvasWidth;
-        const heightRatio = pdfHeight / canvasHeight;
-        const ratio = Math.min(widthRatio, heightRatio);
-
-        // Calculate the new dimensions of the image
-        const imgWidth = canvasWidth * ratio;
-        const imgHeight = canvasHeight * ratio;
-
-        // Calculate offsets to center the image
-        const xOffset = (pdfWidth - imgWidth) / 2;
-        const yOffset = 0; // Align to top
-
-        pdf.addImage(imgData, "PNG", xOffset, yOffset, imgWidth, imgHeight);
-        pdf.save(`Ayush-Report-${new Date().toISOString().split('T')[0]}.pdf`);
-        setIsSaving(false);
-    }).catch(err => {
-        console.error("Failed to generate PDF", err);
-        toast({
-            variant: "destructive",
-            title: "PDF Generation Failed",
-            description: "Could not save the report as a PDF. Please try again.",
-        });
-        setIsSaving(false);
-    });
-  };
 
   const pieData = systemDistribution.map((item) => ({
     name: item.system,
     value: item.count,
   }));
 
+  const CustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
+    const RADIAN = Math.PI / 180;
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    // Don't render label for small percentages to avoid overlap
+    if (percent < 0.03) {
+      return null;
+    }
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor="middle"
+        dominantBaseline="central"
+        className="text-xs font-bold"
+      >
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
+
+
   return (
     <>
-      <div className="flex justify-end mb-4">
-        <Button onClick={handleSavePdf} disabled={isSaving}>
-          {isSaving ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <Download className="mr-2 h-4 w-4" />
-          )}
-          Save as PDF
-        </Button>
-      </div>
-      <div ref={reportRef} className="space-y-8 animate-fade-in p-4 bg-background">
+      <div className="space-y-8 animate-fade-in p-4 bg-background">
         <Card>
             <CardHeader>
               <CardTitle>Report Summary</CardTitle>
@@ -190,17 +135,7 @@ export default function ReportDisplay({ report }: ReportDisplayProps) {
                     cx="50%"
                     cy="50%"
                     labelLine={false}
-                    label={({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-                      const RADIAN = Math.PI / 180;
-                      const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-                      const x = cx + radius * Math.cos(-midAngle * RADIAN);
-                      const y = cy + radius * Math.sin(-midAngle * RADIAN);
-                      return (
-                        <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-                          {`${(percent * 100).toFixed(0)}%`}
-                        </text>
-                      );
-                    }}
+                    label={<CustomLabel />}
                     outerRadius={120}
                     dataKey="value"
                   >
