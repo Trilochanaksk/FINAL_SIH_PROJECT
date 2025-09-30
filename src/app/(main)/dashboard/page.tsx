@@ -9,20 +9,14 @@ type DashboardPageProps = {
 };
 
 export default function DashboardPage({ searchParams }: DashboardPageProps) {
-  const role = searchParams?.role || 'doctor';
+  const role = searchParams?.role ?? 'doctor';
 
   if (role === 'patient') {
-    // In a real app, fetch data based on the logged-in user
-    const patientFiles = samplePatientFiles.filter(file => file.id === "PAT-001");
+    // In a real app, fetch data based on the logged-in patient
+    const patientFiles = samplePatientFiles.filter((file) => file.id === 'PAT-001');
     return <PatientDashboard files={patientFiles} />;
   }
 
-  // In a real app, fetch this data from a database
-  const files = samplePatientFiles.filter(
-    (file) =>
-      file.id.toLowerCase().includes("") ||
-      file.patientName.toLowerCase().includes("")
-  );
-
-  return <DoctorDashboard files={files} />;
+  // In a real app, fetch data from a database
+  return <DoctorDashboard files={samplePatientFiles} />;
 }
