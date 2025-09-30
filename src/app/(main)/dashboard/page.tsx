@@ -1,5 +1,5 @@
-// /src/app/(main)/dashboard/page.tsx
-"use client";
+// src/app/(main)/dashboard/page.tsx
+"use client"; // Important: makes the page client-side only
 
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
@@ -15,7 +15,7 @@ export default function DashboardPage() {
   );
 }
 
-// Client-only content
+// Dashboard content is fully client-side
 function DashboardContent() {
   const searchParams = useSearchParams();
   const role = searchParams?.get("role") === "patient" ? "patient" : "doctor";
