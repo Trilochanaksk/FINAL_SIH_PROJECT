@@ -2,27 +2,23 @@
 "use client";
 
 import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import DoctorDashboard from "./doctor-dashboard";
 import PatientDashboard from "./patient-dashboard";
 import { samplePatientFiles } from "@/lib/patient-data";
 
-type DashboardPageProps = {
-  searchParams?: {
-    role?: "doctor" | "patient";
-  };
-};
-
-export default function DashboardPage({ searchParams }: DashboardPageProps) {
+export default function DashboardPage() {
   return (
     <Suspense fallback={<div>Loading dashboard...</div>}>
-      <DashboardContent searchParams={searchParams} />
+      <DashboardContent />
     </Suspense>
   );
 }
 
-// Client-only component to safely handle dynamic dashboard rendering
-function DashboardContent({ searchParams }: DashboardPageProps) {
-  const role = searchParams?.role || "doctor";
+// Client-only content
+function DashboardContent() {
+  const searchParams = useSearchParams();
+  const role = searchParams?.get("role") === "patient" ? "patient" : "doctor";
 
   if (role === "patient") {
     const patientFiles = samplePatientFiles.filter((file) => file.id === "PAT-001");
