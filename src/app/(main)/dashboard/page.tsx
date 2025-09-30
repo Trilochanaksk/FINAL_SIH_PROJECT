@@ -1,22 +1,24 @@
-import DoctorDashboard from './doctor-dashboard';
-import PatientDashboard from './patient-dashboard';
-import { samplePatientFiles } from '@/lib/patient-data';
+// /src/app/(main)/dashboard/page.tsx
+import { Suspense } from "react";
+import DoctorDashboardWrapper from "./doctor-dashboard-wrapper";
+import PatientDashboardWrapper from "./patient-dashboard-wrapper";
 
 type DashboardPageProps = {
   searchParams?: {
-    role?: 'doctor' | 'patient';
+    role?: "doctor" | "patient";
   };
 };
 
 export default function DashboardPage({ searchParams }: DashboardPageProps) {
-  const role = searchParams?.role ?? 'doctor';
+  const role = searchParams?.role || "doctor";
 
-  if (role === 'patient') {
-    // In a real app, fetch data based on the logged-in patient
-    const patientFiles = samplePatientFiles.filter((file) => file.id === 'PAT-001');
-    return <PatientDashboard files={patientFiles} />;
-  }
-
-  // In a real app, fetch data from a database
-  return <DoctorDashboard files={samplePatientFiles} />;
+  return (
+    <Suspense fallback={<div>Loading dashboard...</div>}>
+      {role === "patient" ? (
+        <PatientDashboardWrapper />
+      ) : (
+        <DoctorDashboardWrapper />
+      )}
+    </Suspense>
+  );
 }
